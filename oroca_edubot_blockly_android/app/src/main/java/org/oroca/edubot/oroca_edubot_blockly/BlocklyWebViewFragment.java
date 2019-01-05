@@ -1,10 +1,10 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,31 +12,31 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-/**
- * This fragments contains and manages the web view that hosts Blockly.
- */
-public class BlocklyWebViewFragment extends Fragment {
-    protected @Nullable WebView mWebView = null;
-
-    @SuppressLint("SetJavaScriptEnabled")
-    @Nullable
+public class BlocklyWebviewFragment extends Fragment {
+    WebView mWebView;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-            @Nullable Bundle savedInstanceState) {
-        mWebView = new WebView(inflater.getContext());
-        mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.setWebContentsDebuggingEnabled(true);
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        mWebView.loadUrl("file:///android_asset/blockly/webview.html");
-        return mWebView;
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
-    // TODO: Method to invoke code generation
-    // TODO: Method to load workspace from string (or InputStream?)
-    // TODO: Method to serialize workspace to string (or OutputStream?)
-    // TODO: Clear / reset workspace
-    // TODO: Load toolbox
-    // TODO: Listener for event JSON
-    // TODO: Method to evaluate JavaScript string in the WebView
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.blockly_webview, null);
+        mWebView = view.findViewById(R.id.webviewBlockly);
+        mWebView.setWebContentsDebuggingEnabled(true);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+
+        });
+
+        WebSettings webSettings = mWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        mWebView.loadUrl("file:///android_asset/blockly/webview.html");
+        return view;
+    }
+
+    public void TestFunction() {
+        Log.i("EEEE", "asdlfkjasldkfjalsdkjfalskjflks");
+    }
 }
