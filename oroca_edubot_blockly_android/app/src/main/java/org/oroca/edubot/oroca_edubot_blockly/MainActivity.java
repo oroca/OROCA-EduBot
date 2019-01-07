@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    BlocklyWebviewFragment mBlocklyWebviewFragment;
+    BlocklyWebViewFragment mBlocklyWebViewFragment;
     MainMenuFragment mMainMenuFragment;
     ImageButton mButton;
 
@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBlocklyWebviewFragment = new BlocklyWebviewFragment();
+        mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
 
         mButton = (ImageButton) findViewById(R.id.buttonOpenMenu);
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, mBlocklyWebviewFragment, "blocklyFragment")
+                .add(R.id.frameLayout, mBlocklyWebViewFragment, "blocklyFragment")
                 .commit();
     }
 

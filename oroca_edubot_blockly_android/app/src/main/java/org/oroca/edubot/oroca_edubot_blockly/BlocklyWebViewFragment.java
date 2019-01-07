@@ -14,11 +14,11 @@ import android.webkit.WebView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BlocklyWebviewFragment extends Fragment {
+public class BlocklyWebViewFragment extends Fragment {
     View mRootView = null;
     WebView mWebView;
 
-    public BlocklyWebviewFragment() {
+    public BlocklyWebViewFragment() {
         // Required empty public constructor
     }
 
