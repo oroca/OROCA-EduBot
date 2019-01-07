@@ -433,3 +433,12 @@ Blockly.Msg["TEXTS_HUE"] = "160";
 Blockly.Msg["PROCEDURES_HUE"] = "290";
 Blockly.Msg["COLOUR_HUE"] = "20";
 Blockly.Msg["VARIABLES_DYNAMIC_HUE"] = "310";
+
+Blockly.Msg["CATEGORY_LABEL_LOGIC"] = "로직";
+Blockly.Msg["CATEGORY_LABEL_LOOP"] = "반복";
+Blockly.Msg["CATEGORY_LABEL_MATH"] = "산술";
+Blockly.Msg["CATEGORY_LABEL_TEXT"] = "텍스트";
+Blockly.Msg["CATEGORY_LABEL_LISTS"] = "리스트";
+Blockly.Msg["CATEGORY_LABEL_COLOUR"] = "색상";
+Blockly.Msg["CATEGORY_LABEL_VARIABLES"] = "변수";
+Blockly.Msg["CATEGORY_LABEL_FUNCTIONS"] = "함수";

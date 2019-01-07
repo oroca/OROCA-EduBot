@@ -433,3 +433,12 @@ Blockly.Msg["TEXTS_HUE"] = "160";
 Blockly.Msg["PROCEDURES_HUE"] = "290";
 Blockly.Msg["COLOUR_HUE"] = "20";
 Blockly.Msg["VARIABLES_DYNAMIC_HUE"] = "310";
+
+Blockly.Msg["CATEGORY_LABEL_LOGIC"] = "Logic";
+Blockly.Msg["CATEGORY_LABEL_LOOP"] = "Loop";
+Blockly.Msg["CATEGORY_LABEL_MATH"] = "Math";
+Blockly.Msg["CATEGORY_LABEL_TEXT"] = "Text";
+Blockly.Msg["CATEGORY_LABEL_LISTS"] = "Lists";
+Blockly.Msg["CATEGORY_LABEL_COLOUR"] = "Colour";
+Blockly.Msg["CATEGORY_LABEL_VARIABLES"] = "Variables";
+Blockly.Msg["CATEGORY_LABEL_FUNCTIONS"] = "Functions";
