@@ -21,8 +21,8 @@
 
         <ImageButton
             android:id="@+id/imageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -31,8 +31,8 @@
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -41,8 +41,8 @@
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -51,8 +51,8 @@
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"

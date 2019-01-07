@@ -15,6 +15,7 @@ import android.webkit.WebView;
  * A simple {@link Fragment} subclass.
  */
 public class BlocklyWebviewFragment extends Fragment {
+    View mRootView = null;
     WebView mWebView;
 
     public BlocklyWebviewFragment() {
@@ -26,19 +27,30 @@ public class BlocklyWebviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_blockly_webview, container, false);
-        mWebView = v.findViewById(R.id.webView);
+        if(mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_blockly_webview, container, false);
+            mWebView = mRootView.findViewById(R.id.webView);
 
-        mWebView.setWebContentsDebuggingEnabled(true);
-        mWebView.setWebChromeClient(new WebChromeClient() {
+            mWebView.setWebContentsDebuggingEnabled(true);
+            mWebView.setWebChromeClient(new WebChromeClient() {
 
-        });
+            });
 
-        WebSettings webSettings = mWebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+            WebSettings webSettings = mWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
 
-        mWebView.loadUrl("file:///android_asset/blockly/webview.html");
-        return v;
+            mWebView.loadUrl("file:///android_asset/blockly/webview.html");
+        }
+        else {
+        }
+        return mRootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        if (mRootView.getParent() != null) {
+            ((ViewGroup)mRootView.getParent()).removeView(mRootView);
+        }
+        super.onDestroyView();
+    }
 }

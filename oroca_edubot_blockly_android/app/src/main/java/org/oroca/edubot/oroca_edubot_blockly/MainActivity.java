@@ -1,6 +1,7 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
 import android.media.Image;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameLayout, mMainMenuFragment, "mainmenuFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
             }
