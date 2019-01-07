@@ -1,36 +1,40 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
+
+    BlocklyWebviewFragment mBlocklyWebviewFragment;
+    MainMenuFragment mMainMenuFragment;
+    ImageButton mButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        mBlocklyWebviewFragment = new BlocklyWebviewFragment();
+        mMainMenuFragment = new MainMenuFragment();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        mButton = (ImageButton) findViewById(R.id.buttonOpenMenu);
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameLayout, mMainMenuFragment, "mainmenuFragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
 
-        fragmentTransaction.add(R.id.contents, new BlocklyWebviewFragment());
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.frameLayout, mBlocklyWebviewFragment, "blocklyFragment")
+                .commit();
     }
 
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
 
 }

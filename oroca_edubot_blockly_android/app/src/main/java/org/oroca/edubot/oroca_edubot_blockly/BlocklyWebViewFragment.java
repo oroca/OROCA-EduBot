@@ -1,10 +1,8 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
+
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +10,25 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class BlocklyWebviewFragment extends Fragment {
     WebView mWebView;
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+    public BlocklyWebviewFragment() {
+        // Required empty public constructor
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.blockly_webview, null);
-        mWebView = view.findViewById(R.id.webviewBlockly);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_blockly_webview, container, false);
+        mWebView = v.findViewById(R.id.webView);
+
         mWebView.setWebContentsDebuggingEnabled(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
 
@@ -33,10 +38,7 @@ public class BlocklyWebviewFragment extends Fragment {
         webSettings.setJavaScriptEnabled(true);
 
         mWebView.loadUrl("file:///android_asset/blockly/webview.html");
-        return view;
+        return v;
     }
 
-    public void TestFunction() {
-        Log.i("EEEE", "asdlfkjasldkfjalsdkjfalskjflks");
-    }
 }
