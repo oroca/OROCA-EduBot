@@ -12,7 +12,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-public class BlocklyWebviewFragment extends Fragment {
+public class BlocklyWebViewFragment extends Fragment {
     WebView mWebView;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

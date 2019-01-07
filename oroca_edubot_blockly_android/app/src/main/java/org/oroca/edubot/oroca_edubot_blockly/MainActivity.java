@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.contents, new BlocklyWebviewFragment());
+        fragmentTransaction.add(R.id.contents, new BlocklyWebViewFragment());
         fragmentTransaction.commit();
     }
 
