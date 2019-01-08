@@ -1,30 +1,26 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.StringWriter;
 
 public class MainActivity extends AppCompatActivity {
 
-    BlocklyWebviewFragment mBlocklyWebviewFragment;
+    BlocklyWebViewFragment mBlocklyWebViewFragment;
     MainMenuFragment mMainMenuFragment;
     ImageButton mButton;
 
@@ -34,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        mBlocklyWebviewFragment = new BlocklyWebviewFragment();
+        mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
 
         mButton = (ImageButton) findViewById(R.id.buttonOpenMenu);
@@ -50,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, mBlocklyWebviewFragment, "blocklyFragment")
+                .add(R.id.frameLayout, mBlocklyWebViewFragment, "blocklyFragment")
                 .commit();
     }
 
@@ -75,14 +71,14 @@ public class MainActivity extends AppCompatActivity {
                 InputStream is = getContentResolver().openInputStream(selectFile);
                 InputStreamReader ir = new InputStreamReader(is);
                 BufferedReader br = new BufferedReader(ir);
-                mBlocklyWebviewFragment.reqRestoreXmlTextToWorkspace(br.readLine());
+                mBlocklyWebViewFragment.reqRestoreXmlTextToWorkspace(br.readLine());
             }
             catch (FileNotFoundException e) {}
             catch (IOException e) {}
         }
         else if(requestCode == MainMenuFragment.ON_REQUEST_SAVE_FILE && resultCode == RESULT_OK) {
             Uri selectFile = data.getData();
-            mBlocklyWebviewFragment.reqGetXMLTextFromWorkspace(selectFile.toString());
+            mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace(selectFile.toString());
         }
     }
 
@@ -103,13 +99,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, getResources().getString(R.string.save_project), Toast.LENGTH_SHORT).show();
 
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, mBlocklyWebviewFragment)
+                    .replace(R.id.frameLayout, mBlocklyWebViewFragment)
                     .commit();
         }
         else if(req_name.equals("restoreXmlTextToWorkspace")) {
             Toast.makeText(this, getResources().getString(R.string.load_project), Toast.LENGTH_SHORT).show();
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, mBlocklyWebviewFragment)
+                    .replace(R.id.frameLayout, mBlocklyWebViewFragment)
                     .commit();
         }
     }
