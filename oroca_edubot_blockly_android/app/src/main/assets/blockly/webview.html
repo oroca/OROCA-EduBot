@@ -25,6 +25,22 @@
                   startScale: 1.2},
           trashcan: true,
         });
+
+    function getXmlTextFromWorkspace() {
+      var xml = Blockly.Xml.workspaceToDom(workspace);
+      var xml_text = Blockly.Xml.domToText(xml);
+
+      return xml_text;
+    }
+
+    function restoreXmlTextToWorkspace(xml_text) {
+      Blockly.mainWorkspace.clear();
+
+      var xml = Blockly.Xml.textToDom(xml_text);
+      Blockly.Xml.domToWorkspace(xml, workspace);
+
+      Blockly.mainWorkspace.zoomCenter(0);
+    }
   </script>
 </body>
 </html>

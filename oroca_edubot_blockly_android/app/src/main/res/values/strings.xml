@@ -2,5 +2,7 @@
     <string name="app_name">OROCA EduBot Blockly</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="select_project">Select Project...</string>
+    <string name="load_project">Load your project successfully...</string>
+    <string name="save_project">Save your project successfully...</string>
 </resources>

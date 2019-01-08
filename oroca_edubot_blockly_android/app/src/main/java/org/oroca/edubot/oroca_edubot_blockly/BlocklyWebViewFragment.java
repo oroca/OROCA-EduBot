@@ -3,6 +3,7 @@ package org.oroca.edubot.oroca_edubot_blockly;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,12 +39,29 @@ public class BlocklyWebviewFragment extends Fragment {
 
             WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
-
+            mWebView.addJavascriptInterface(getContext(), "Android");
             mWebView.loadUrl("file:///android_asset/blockly/webview.html");
         }
         else {
         }
         return mRootView;
+    }
+
+    public void reqGetXMLTextFromWorkspace(String uri) {
+        String script = "javascript:Android.onResponseData(\"getXmlTextFromWorkspace\", \"";
+        script = script.concat(uri);
+        script = script.concat("\", getXmlTextFromWorkspace());");
+        mWebView.loadUrl(script);
+    }
+
+    public void reqRestoreXmlTextToWorkspace(String xml_text) {
+        String script = "javascript:Android.onResponseData(\"restoreXmlTextToWorkspace\", \"";
+        script = script.concat("");
+
+        String conv_string = xml_text.replace("\"", "\\\"");
+        script = script.concat("\", restoreXmlTextToWorkspace(\"" +
+                conv_string + "\"));");
+        mWebView.loadUrl(script);
     }
 
     @Override
