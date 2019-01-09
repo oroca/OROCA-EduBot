@@ -1,4 +1,4 @@
-# OROCA-EduBot
+# OROCA-EduBot [hardward]
 
 [기구]
 인벤터로 작성한 stl, stp파일
