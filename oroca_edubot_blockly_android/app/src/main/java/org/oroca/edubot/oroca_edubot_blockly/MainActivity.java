@@ -1,8 +1,13 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +24,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1011;
+    private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1012;
 
     BlocklyWebViewFragment mBlocklyWebViewFragment;
     MainMenuFragment mMainMenuFragment;
@@ -29,6 +36,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
 
         mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
@@ -50,7 +70,23 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-//    @Override
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "You can't load the projects in external storage.", Toast.LENGTH_LONG).show();
+                }
+            }
+            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "You can't save your projects to external storage.", Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+
+    //    @Override
 //    public void onWindowFocusChanged(boolean hasFocus) {
 //        super.onWindowFocusChanged(hasFocus);
 //        if (hasFocus) {
