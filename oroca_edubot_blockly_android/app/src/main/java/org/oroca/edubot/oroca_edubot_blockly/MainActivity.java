@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.widget.ImageButton;
@@ -26,6 +27,7 @@ import java.io.PrintStream;
 public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1011;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1012;
+    private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 1013;
 
     BlocklyWebViewFragment mBlocklyWebViewFragment;
     MainMenuFragment mMainMenuFragment;
@@ -37,18 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
-        }
+        appCheckPermission();
 
         mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
@@ -70,6 +61,33 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void appCheckPermission() {
+        // Read & Write in External Storage
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+        }
+
+        // Bluetooth
+        if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+            Toast.makeText(this, "This device can't support BLE.", Toast.LENGTH_SHORT).show();
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_COARSE_LOCATION);
+        }
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -81,6 +99,11 @@ public class MainActivity extends AppCompatActivity {
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "You can't save your projects to external storage.", Toast.LENGTH_LONG).show();
+                }
+            }
+            case MY_PERMISSIONS_REQUEST_COARSE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "You need to allow permission for using BLE.", Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -113,23 +136,25 @@ public class MainActivity extends AppCompatActivity {
             catch (IOException e) {}
         }
         else if(requestCode == MainMenuFragment.ON_REQUEST_SAVE_FILE && resultCode == RESULT_OK) {
-            Uri selectFile = data.getData();
-            mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace(selectFile.toString());
+            targetFileName = data.getData();
+            Log.e("EEE", targetFileName.toString());
+            mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace();
         }
     }
 
-    @JavascriptInterface
-    void onResponseData(String req_name, String data1, String data2) {
-        if(req_name.equals("getXmlTextFromWorkspace")) {
-            Uri selectFile = Uri.parse(data1);
+    private Uri targetFileName = null;
 
+    @JavascriptInterface
+    void onResponseData(String req_name, String data) {
+        if(req_name.equals("getXmlTextFromWorkspace")) {
             try {
-                OutputStream os = getContentResolver().openOutputStream(selectFile);
+                OutputStream os = getContentResolver().openOutputStream(targetFileName, "w");
                 PrintStream ps = new PrintStream(os);
 
-                ps.print(data2);
+                ps.print(data);
                 ps.flush();
                 ps.close();
+                targetFileName = null;
             }
             catch (FileNotFoundException e) {}
             Toast.makeText(this, getResources().getString(R.string.save_project), Toast.LENGTH_SHORT).show();

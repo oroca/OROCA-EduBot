@@ -47,19 +47,16 @@ public class BlocklyWebViewFragment extends Fragment {
         return mRootView;
     }
 
-    public void reqGetXMLTextFromWorkspace(String uri) {
-        String script = "javascript:Android.onResponseData(\"getXmlTextFromWorkspace\", \"";
-        script = script.concat(uri);
-        script = script.concat("\", getXmlTextFromWorkspace());");
+    public void reqGetXMLTextFromWorkspace() {
+        String script = "javascript:Android.onResponseData(\"getXmlTextFromWorkspace\", ";
+        script = script.concat("getXmlTextFromWorkspace());");
         mWebView.loadUrl(script);
     }
 
     public void reqRestoreXmlTextToWorkspace(String xml_text) {
-        String script = "javascript:Android.onResponseData(\"restoreXmlTextToWorkspace\", \"";
-        script = script.concat("");
-
+        String script = "javascript:Android.onResponseData(\"restoreXmlTextToWorkspace\", ";
         String conv_string = xml_text.replace("\"", "\\\"");
-        script = script.concat("\", restoreXmlTextToWorkspace(\"" +
+        script = script.concat("restoreXmlTextToWorkspace(\"" +
                 conv_string + "\"));");
         mWebView.loadUrl(script);
     }

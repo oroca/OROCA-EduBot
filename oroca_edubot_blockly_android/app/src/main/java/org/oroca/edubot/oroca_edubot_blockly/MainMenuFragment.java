@@ -58,9 +58,7 @@ public class MainMenuFragment extends Fragment {
                         .setType("*/*")
                         .setAction(Intent.ACTION_CREATE_DOCUMENT)
                         .putExtra(Intent.EXTRA_TITLE, "untitled.xml");
-                ((Activity)getContext()).startActivityForResult(
-                        Intent.createChooser(intent, getResources().getString(R.string.select_project)),
-                        ON_REQUEST_SAVE_FILE);
+                ((Activity)getContext()).startActivityForResult(intent, ON_REQUEST_SAVE_FILE);
             }
         });
 
