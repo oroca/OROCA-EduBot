@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frameLayout, mMainMenuFragment, "mainmenuFragment")
+                        .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.frameLayout, mBlocklyWebViewFragment, "blocklyFragment")
+                .replace(R.id.frameLayout, mBlocklyWebViewFragment)
                 .commit();
     }
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Bluetooth
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "This device can't support BLE.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "This device can't support BLE.", Toast.LENGTH_LONG).show();
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -169,5 +169,10 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.frameLayout, mBlocklyWebViewFragment)
                     .commit();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
     }
 }
