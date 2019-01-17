@@ -1,6 +1,13 @@
 package org.oroca.edubot.oroca_edubot_blockly;
 
 import android.Manifest;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -23,6 +30,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1011;
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         // Bluetooth
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, "This device can't support BLE.", Toast.LENGTH_LONG).show();
+            finish();
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -171,8 +181,53 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        //super.onBackPressed();
+
+    BluetoothManager mBluetoothManager;
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothLeScanner mBluetoothLeScanner;
+    ScanSettings mScanSettings;
+    boolean mIsScanning = false;
+    boolean mIsConnectedBle = false;
+
+    public boolean isConnectedBleDevice() { return mIsConnectedBle; }
+
+    public void startBleDeviceScanning() {
+        mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        try {
+            mBluetoothAdapter = mBluetoothManager.getAdapter();
+        } catch(NullPointerException e) { Toast.makeText(this,"Error to get bluetooth adapter.", Toast.LENGTH_LONG).show(); }
+
+        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        mScanSettings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
+
+        mIsScanning = true;
+        mBluetoothLeScanner.startScan(scanCallback);
     }
+
+    private final ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+
+            if(result.getDevice().getName() != null) {
+                Log.i("EEE", result.getDevice().getName());
+            }
+        }
+
+        @Override
+        public void onBatchScanResults(List<ScanResult> results) {
+            super.onBatchScanResults(results);
+        }
+
+        @Override
+        public void onScanFailed(int errorCode) {
+            super.onScanFailed(errorCode);
+        }
+    };
+
+    public void stopBleDeviceScanning() {
+        mIsScanning = false;
+        mBluetoothLeScanner.stopScan(scanCallback);
+    }
+
 }

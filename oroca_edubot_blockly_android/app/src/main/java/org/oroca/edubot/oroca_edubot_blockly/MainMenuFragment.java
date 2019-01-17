@@ -62,6 +62,21 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        buttonConnectDevice = (ImageButton) v.findViewById(R.id.buttonConnectDevice);
+        if(((MainActivity)getActivity()).isConnectedBleDevice()) {
+            buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
+        }
+        else {
+            buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
+        }
+
+        buttonConnectDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).startBleDeviceScanning();
+            }
+        });
+
         return v;
     }
 
