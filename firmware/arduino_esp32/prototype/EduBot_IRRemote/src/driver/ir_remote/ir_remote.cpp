@@ -20,7 +20,7 @@ static rmt_obj_t* rmt_recv = NULL;
 static volatile uint32_t ir_recevied_data = 0;
 static volatile bool     is_recevied = false;
 static volatile bool     print_log = false;
-
+static volatile uint32_t rcv_pre_time = 0;
 
 extern "C" void IRAM_ATTR ir_remote_isr(uint32_t *data, size_t len)
 {
@@ -46,6 +46,7 @@ extern "C" void IRAM_ATTR ir_remote_isr(uint32_t *data, size_t len)
   {
     int index = 0;
     uint32_t ir_data = 0;
+
     for (int i=bit_format.bit_start; i<=bit_format.bit_end; i++)
     {
       if (p_data[i].duration1 >= bit_format.bit_high_min && p_data[i].duration1 <= bit_format.bit_high_max)
@@ -55,9 +56,21 @@ extern "C" void IRAM_ATTR ir_remote_isr(uint32_t *data, size_t len)
       index++;
     }
     ir_recevied_data = ir_data;
+    is_recevied = true;    
   }
+  else
+  {
+    if (millis()-rcv_pre_time >= 500)
+    {
+      ir_recevied_data = 0;
+    }
 
-  is_recevied = true;
+    if (len == 2)
+    {
+      is_recevied = true;    
+    }  
+  }
+  rcv_pre_time = millis();  
 }
 
 
