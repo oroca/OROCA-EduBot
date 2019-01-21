@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 1013;
 
     BlocklyWebViewFragment mBlocklyWebViewFragment;
+    DeviceSelectFragment mDeviceSelectFragment;
     MainMenuFragment mMainMenuFragment;
     ImageButton mButton;
 
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
+        mDeviceSelectFragment = new DeviceSelectFragment();
 
         mButton = (ImageButton) findViewById(R.id.buttonOpenMenu);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -188,10 +191,23 @@ public class MainActivity extends AppCompatActivity {
     ScanSettings mScanSettings;
     boolean mIsScanning = false;
     boolean mIsConnectedBle = false;
+    Handler mHandler = new Handler();
+    static final long SCANNING_TIMEOUT = 10000; // 10sec
 
     public boolean isConnectedBleDevice() { return mIsConnectedBle; }
 
+    public void changeFragmentDeviceSelection() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, mDeviceSelectFragment)
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .commit();
+    }
+
     public void startBleDeviceScanning() {
+        if(mIsScanning) {
+            this.stopBleDeviceScanning();
+        }
+
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         try {
             mBluetoothAdapter = mBluetoothManager.getAdapter();
@@ -199,6 +215,16 @@ public class MainActivity extends AppCompatActivity {
 
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         mScanSettings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
+
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("EEEE", "Stop Scan");
+                mIsScanning = false;
+                mBluetoothLeScanner.stopScan(scanCallback);
+                mDeviceSelectFragment.onCompletedScanning();
+            }
+        }, SCANNING_TIMEOUT);
 
         mIsScanning = true;
         mBluetoothLeScanner.startScan(scanCallback);
@@ -210,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
             super.onScanResult(callbackType, result);
 
             if(result.getDevice().getName() != null) {
-                Log.i("EEE", result.getDevice().getName());
+                mDeviceSelectFragment.onScanResult(result);
             }
         }
 

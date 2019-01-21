@@ -73,6 +73,7 @@ public class MainMenuFragment extends Fragment {
         buttonConnectDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).changeFragmentDeviceSelection();
                 ((MainActivity)getActivity()).startBleDeviceScanning();
             }
         });
