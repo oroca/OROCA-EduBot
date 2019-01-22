@@ -14,11 +14,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="256" />
-                            <entry key="outputName" value="ic_icon_edubot" />
+                            <entry key="height" value="64" />
+                            <entry key="outputName" value="ic_icon_setup" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../resources/icon_edubot.svg" />
-                            <entry key="width" value="256" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../resources/Circle-icons-gear.svg" />
+                            <entry key="width" value="64" />
                           </map>
                         </option>
                       </PersistentState>

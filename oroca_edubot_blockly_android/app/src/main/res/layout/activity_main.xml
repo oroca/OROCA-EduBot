@@ -27,5 +27,5 @@
         android:scaleType="fitStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_icon_find" />
+        app:srcCompat="@drawable/ic_icon_setup" />
 </android.support.constraint.ConstraintLayout>

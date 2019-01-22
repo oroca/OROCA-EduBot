@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     BlocklyWebViewFragment mBlocklyWebViewFragment;
     DeviceSelectFragment mDeviceSelectFragment;
     MainMenuFragment mMainMenuFragment;
+    ViewCodeFragment mViewCodeFragment;
     ImageButton mButton;
 
     private Uri targetFileName = null;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
         mDeviceSelectFragment = new DeviceSelectFragment();
+        mViewCodeFragment = new ViewCodeFragment(this);
         mEdubotController = new EdubotController(this);
 
         mEdubotController.setOnEdubotControllerListener(this);
@@ -83,6 +85,8 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                         .addToBackStack(null)
                         .commit();
+
+                mButton.setVisibility(View.GONE);
             }
         });
 
@@ -207,6 +211,14 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 }
             });
         }
+        else if(req_name.equals("getGeneratedCodeFromWorkspace")) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mViewCodeFragment.setResultCode(data);
+                }
+            });
+        }
     }
 
     public boolean isConnectedBleDevice() { return mIsConnectedBle; }
@@ -270,6 +282,25 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
             super.onScanFailed(errorCode);
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            mButton.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void reqGetGeneratedCodeFromBlockly() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, mViewCodeFragment, "viewCode")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit();
+
+        mBlocklyWebViewFragment.reqGetGeneratedCodeFromBlockly();
+    }
 
     public void stopBleDeviceScanning() {
         mIsScanning = false;

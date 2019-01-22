@@ -61,6 +61,12 @@ public class BlocklyWebViewFragment extends Fragment {
         mWebView.loadUrl(script);
     }
 
+    public void reqGetGeneratedCodeFromBlockly() {
+        String script = "javascript:Android.onResponseData(\"getGeneratedCodeFromWorkspace\", ";
+        script = script.concat("Blockly.JavaScript.workspaceToCode(workspace));");
+        mWebView.loadUrl(script);
+    }
+
     @Override
     public void onDestroyView() {
         if (mRootView.getParent() != null) {

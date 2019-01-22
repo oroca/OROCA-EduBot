@@ -59,5 +59,15 @@
             android:background="@android:color/transparent"
             android:scaleType="fitStart"
             android:src="@drawable/ic_icon_play" />
+
+        <ImageButton
+            android:id="@+id/buttonViewCode"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_icon_document" />
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

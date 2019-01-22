@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public class MainMenuFragment extends Fragment {
     ImageButton buttonSaveProject;
     ImageButton buttonConnectDevice;
     ImageButton buttonExecute;
+    ImageButton buttonViewCode;
 
     public static int ON_REQUEST_OPEN_FILE = 11;
     public static int ON_REQUEST_SAVE_FILE = 12;
@@ -88,6 +90,14 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("EEE", "ButtonExecute");
+            }
+        });
+
+        buttonViewCode = (ImageButton) v.findViewById(R.id.buttonViewCode);
+        buttonViewCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).reqGetGeneratedCodeFromBlockly();
             }
         });
 
