@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,11 +64,16 @@ public class MainMenuFragment extends Fragment {
         });
 
         buttonConnectDevice = (ImageButton) v.findViewById(R.id.buttonConnectDevice);
+        buttonExecute = (ImageButton) v.findViewById(R.id.buttonExecute);
         if(((MainActivity)getActivity()).isConnectedBleDevice()) {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
+            buttonExecute.setEnabled(true);
+            buttonExecute.setImageResource(R.drawable.ic_icon_play);
         }
         else {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
+            buttonExecute.setEnabled(false);
+            buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
         }
 
         buttonConnectDevice.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +84,25 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        buttonExecute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("EEE", "ButtonExecute");
+            }
+        });
+
         return v;
     }
 
+    void onConnected() {
+        buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
+        buttonExecute.setEnabled(true);
+        buttonExecute.setImageResource(R.drawable.ic_icon_play);
+    }
+
+    void onDisconnected() {
+        buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
+        buttonExecute.setEnabled(false);
+        buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+    }
 }

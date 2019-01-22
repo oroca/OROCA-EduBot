@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -34,27 +36,43 @@ import java.io.PrintStream;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EdubotController.OnEdubotControllerListener {
     private static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1011;
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1012;
     private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 1013;
+    private static final int MY_REQUEST_ENABLE_BLUETOOTH = 1014;
+
 
     BlocklyWebViewFragment mBlocklyWebViewFragment;
     DeviceSelectFragment mDeviceSelectFragment;
     MainMenuFragment mMainMenuFragment;
     ImageButton mButton;
 
+    private Uri targetFileName = null;
+
+    BluetoothManager mBluetoothManager;
+    BluetoothAdapter mBluetoothAdapter;
+    BluetoothLeScanner mBluetoothLeScanner;
+    ScanSettings mScanSettings;
+    boolean mIsScanning = false;
+    boolean mIsConnectedBle = false;
+    Handler mHandler = new Handler();
+    static final long SCANNING_TIMEOUT = 10000; // 10sec
+
+    private EdubotController mEdubotController;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-
         appCheckPermission();
 
         mBlocklyWebViewFragment = new BlocklyWebViewFragment();
         mMainMenuFragment = new MainMenuFragment();
         mDeviceSelectFragment = new DeviceSelectFragment();
+        mEdubotController = new EdubotController(this);
+
+        mEdubotController.setOnEdubotControllerListener(this);
 
         mButton = (ImageButton) findViewById(R.id.buttonOpenMenu);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +171,10 @@ public class MainActivity extends AppCompatActivity {
             Log.e("EEE", targetFileName.toString());
             mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace();
         }
+        else if(requestCode == MY_REQUEST_ENABLE_BLUETOOTH) {
+            Log.i("EEE", "Enable Bluetooth: " + Integer.toString(resultCode));
+        }
     }
-
-    private Uri targetFileName = null;
 
     @JavascriptInterface
     void onResponseData(String req_name, String data) {
@@ -172,34 +191,31 @@ public class MainActivity extends AppCompatActivity {
             catch (FileNotFoundException e) {}
             Toast.makeText(this, getResources().getString(R.string.save_project), Toast.LENGTH_SHORT).show();
 
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, mBlocklyWebViewFragment)
-                    .commit();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getSupportFragmentManager().popBackStackImmediate();
+                }
+            });
         }
         else if(req_name.equals("restoreXmlTextToWorkspace")) {
             Toast.makeText(this, getResources().getString(R.string.load_project), Toast.LENGTH_SHORT).show();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frameLayout, mBlocklyWebViewFragment)
-                    .commit();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    getSupportFragmentManager().popBackStackImmediate();
+                }
+            });
         }
     }
-
-
-    BluetoothManager mBluetoothManager;
-    BluetoothAdapter mBluetoothAdapter;
-    BluetoothLeScanner mBluetoothLeScanner;
-    ScanSettings mScanSettings;
-    boolean mIsScanning = false;
-    boolean mIsConnectedBle = false;
-    Handler mHandler = new Handler();
-    static final long SCANNING_TIMEOUT = 10000; // 10sec
 
     public boolean isConnectedBleDevice() { return mIsConnectedBle; }
 
     public void changeFragmentDeviceSelection() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frameLayout, mDeviceSelectFragment)
+                .replace(R.id.frameLayout, mDeviceSelectFragment, "deviceSelection")
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -213,13 +229,17 @@ public class MainActivity extends AppCompatActivity {
             mBluetoothAdapter = mBluetoothManager.getAdapter();
         } catch(NullPointerException e) { Toast.makeText(this,"Error to get bluetooth adapter.", Toast.LENGTH_LONG).show(); }
 
+        if(!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, MY_REQUEST_ENABLE_BLUETOOTH);
+        }
+
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         mScanSettings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build();
 
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.i("EEEE", "Stop Scan");
                 mIsScanning = false;
                 mBluetoothLeScanner.stopScan(scanCallback);
                 mDeviceSelectFragment.onCompletedScanning();
@@ -256,4 +276,27 @@ public class MainActivity extends AppCompatActivity {
         mBluetoothLeScanner.stopScan(scanCallback);
     }
 
+    public void connectBleDevice(String name, String address) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        stopBleDeviceScanning();
+        mEdubotController.connectToDevice(address);
+    }
+
+    @Override
+    public void onConnected() {
+        mIsConnectedBle = true;
+        mMainMenuFragment.onConnected();
+    }
+
+    @Override
+    public void onDisconnected() {
+        mIsConnectedBle = false;
+        mMainMenuFragment.onDisconnected();
+    }
 }

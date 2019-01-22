@@ -22,8 +22,8 @@
 
         <ImageButton
             android:id="@+id/buttonLoadProject"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -32,8 +32,8 @@
 
         <ImageButton
             android:id="@+id/buttonSaveProject"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -42,8 +42,8 @@
 
         <ImageButton
             android:id="@+id/buttonConnectDevice"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -52,8 +52,8 @@
 
         <ImageButton
             android:id="@+id/buttonExecute"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"

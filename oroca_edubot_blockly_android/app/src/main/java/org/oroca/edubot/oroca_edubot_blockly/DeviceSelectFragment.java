@@ -15,7 +15,7 @@ import android.widget.ImageButton;
 import java.util.ArrayList;
 
 import adapters.BleDevice;
-import adapters.BleDeviceAdaper;
+import adapters.BleDeviceAdapter;
 
 
 /**
@@ -26,7 +26,7 @@ public class DeviceSelectFragment extends Fragment {
     ImageButton buttonReload;
     ArrayList<BleDevice> mDeviceList;
     RecyclerView mRecyclerView;
-    BleDeviceAdaper mBleDeviceAdaper;
+    BleDeviceAdapter mBleDeviceAdapter;
 
 
     public DeviceSelectFragment() {
@@ -47,7 +47,7 @@ public class DeviceSelectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mDeviceList.clear();
-                mBleDeviceAdaper.notifyDataSetChanged();
+                mBleDeviceAdapter.notifyDataSetChanged();
 
                 ((MainActivity)getActivity()).startBleDeviceScanning();
                 buttonReload.setEnabled(false);
@@ -57,9 +57,16 @@ public class DeviceSelectFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerViewDevices);
         mDeviceList = new ArrayList<>();
-        mBleDeviceAdaper = new BleDeviceAdaper(mDeviceList);
-        mRecyclerView.setAdapter(mBleDeviceAdaper);
+        mBleDeviceAdapter = new BleDeviceAdapter(mDeviceList);
+        mRecyclerView.setAdapter(mBleDeviceAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+
+        mBleDeviceAdapter.setOnItemClickListener(new BleDeviceAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String name, String address) {
+                ((MainActivity)getActivity()).connectBleDevice(name, address);
+            }
+        });
 
         return v;
     }
@@ -78,7 +85,7 @@ public class DeviceSelectFragment extends Fragment {
 
         BleDevice device = new BleDevice(result.getDevice().getName(), result.getDevice().getAddress());
         mDeviceList.add(device);
-        mBleDeviceAdaper.notifyDataSetChanged();
+        mBleDeviceAdapter.notifyDataSetChanged();
     }
 
     void onCompletedScanning() {

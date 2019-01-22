@@ -6,15 +6,25 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import org.oroca.edubot.oroca_edubot_blockly.R;
 
 import java.util.List;
 
-public class BleDeviceAdaper extends RecyclerView.Adapter<BleDeviceAdaper.ViewHolder> {
+public class BleDeviceAdapter extends RecyclerView.Adapter<BleDeviceAdapter.ViewHolder> {
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    private OnItemClickListener listener;
+    public interface OnItemClickListener {
+        void onItemClick(String name, String address);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView mTextDeviceName;
         public TextView mTextDeviceAddress;
@@ -24,11 +34,24 @@ public class BleDeviceAdaper extends RecyclerView.Adapter<BleDeviceAdaper.ViewHo
 
             mTextDeviceName = (TextView) itemView.findViewById(R.id.textDeviceName);
             mTextDeviceAddress = (TextView) itemView.findViewById(R.id.textDeviceAddress);
+
+            itemView.setOnClickListener(this::onClick);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if(listener != null) {
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    BleDevice device = mBleDevices.get(position);
+                    listener.onItemClick(device.getDeviceName(), device.getDeviceAddress());
+                }
+            }
         }
     }
 
     private List<BleDevice> mBleDevices;
-    public BleDeviceAdaper(List<BleDevice> bleDevices) {
+    public BleDeviceAdapter(List<BleDevice> bleDevices) {
         mBleDevices = bleDevices;
     }
 
@@ -44,7 +67,7 @@ public class BleDeviceAdaper extends RecyclerView.Adapter<BleDeviceAdaper.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BleDeviceAdaper.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull BleDeviceAdapter.ViewHolder viewHolder, int i) {
         BleDevice device = mBleDevices.get(i);
 
         TextView textName = viewHolder.mTextDeviceName;
