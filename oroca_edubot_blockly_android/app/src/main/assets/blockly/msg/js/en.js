@@ -442,3 +442,27 @@ Blockly.Msg["CATEGORY_LABEL_LISTS"] = "Lists";
 Blockly.Msg["CATEGORY_LABEL_COLOUR"] = "Colour";
 Blockly.Msg["CATEGORY_LABEL_VARIABLES"] = "Variables";
 Blockly.Msg["CATEGORY_LABEL_FUNCTIONS"] = "Functions";
+
+Blockly.Msg["EDUBOT_MOVE_HUE"] = "200";
+Blockly.Msg["EDUBOT_SENSING_HUE"] = "80";
+
+Blockly.Msg["CATEGORY_LABEL_EDUBOT_MOVE"] = "Move";
+Blockly.Msg["CATEGORY_LABEL_EDUBOT_SENSING"] = "Sensor";
+
+Blockly.Msg["EDUBUT_MOVE_LABEL_FORWARD"] = "Forward";
+Blockly.Msg["EDUBUT_MOVE_LABEL_BACKWARD"] = "Backward";
+Blockly.Msg["EDUBUT_MOVE_LABEL_CW"] = "CW";
+Blockly.Msg["EDUBUT_MOVE_LABEL_CCW"] = "CCW";
+Blockly.Msg["EDUBUT_MOVE_LABEL_LEFT"] = "Left";
+Blockly.Msg["EDUBUT_MOVE_LABEL_CENTER"] = "Center";
+Blockly.Msg["EDUBUT_MOVE_LABEL_RIGHT"] = "Right";
+
+Blockly.Msg["EDUBUT_MOVE_MSG_MOVE1"] = "🚗 Move %1 with Velocity %2 (%)";
+Blockly.Msg["EDUBUT_MOVE_MSG_MOVE2"] = "🚗 Move %1 to %2 (cm)";
+Blockly.Msg["EDUBUT_MOVE_MSG_TURN1"] = "🚗 Turn %1 with Velocity %2 (%)";
+Blockly.Msg["EDUBUT_MOVE_MSG_TURN2"] = "🚗 Turn %1 to %2 (deg)";
+Blockly.Msg["EDUBUT_MOVE_MSG_STOP"] = "🚫 Stop";
+Blockly.Msg["EDUBUT_SENSING_MSG_DISTANCE"] = "📏 Distance (0 ~ 2.0m)";
+Blockly.Msg["EDUBUT_SENSING_MSG_FLOOR"] = "🔍 Floor Detect %1 (on/off)";
+
+
