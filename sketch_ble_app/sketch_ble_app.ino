@@ -9,7 +9,7 @@
 
 /* TODO
 
-- 모터 구동 블럭 함수 처리
+- 사운드 플레
 
 */
 
@@ -36,6 +36,8 @@ EduBot edubot;
 #define SENSOR_CHARACTERISTIC_IMU_SENSOR_UUID        "34443c47-3356-11e9-b210-d663bd873d93"
 #define SENSOR_CHARACTERISTIC_BATTERY_LEVEL_UUID     "34443c48-3356-11e9-b210-d663bd873d93"
 
+
+char ble_mac_addr[6] = {0, 0, 0, 0, 0, 0};
 
 int8_t value_motor_set_accel[2] = {0, 0};
 uint8_t value_misc_button = 1;
@@ -189,6 +191,9 @@ void setup() {
   BLEDevice::init("OROCA_EduBot");
   BLEServer *mServer = BLEDevice::createServer();
   mServer->setCallbacks(new MyBLEServerCallbacks());
+  
+  BLEAddress addr = BLEDevice::getAddress();  
+  memcpy(ble_mac_addr, *addr.getNative(), 6);
 
   //************************************************
   // Motor Service
@@ -380,8 +385,10 @@ void loop() {
       edubot.ledOff();
 
       if(status_text_displayed) {
-        display_text = "접속완료!";
-        request_display_text = 1;   
+        edubot.lcd.setCursor(0, 32);
+        edubot.lcd.println("Ready for BLE");
+        edubot.lcd.display();
+        edubot.lcd.clearDisplay();
         status_text_displayed = false;
       }
     }
@@ -389,9 +396,16 @@ void loop() {
       edubot.ledToggle();
 
       if(!status_text_displayed) {
-        display_text = "접속대기 중!";
-        request_display_text = 1; 
-        status_text_displayed = true; 
+        edubot.lcd.setCursor(0, 20);
+        edubot.lcd.println("OROCA_EduBot");
+        char buf[20];
+        sprintf(buf, "%X:%X:%X:%X:%X:%X", 
+          ble_mac_addr[0], ble_mac_addr[1], ble_mac_addr[2], ble_mac_addr[3], ble_mac_addr[4], ble_mac_addr[5]);
+        edubot.lcd.println(std::string(buf).c_str());
+        edubot.lcd.println("\nWait for connection!");
+        edubot.lcd.display();
+        edubot.lcd.clearDisplay();
+        status_text_displayed = true;
       } 
     }
     status_led_count = 0;
