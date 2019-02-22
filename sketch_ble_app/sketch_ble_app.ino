@@ -138,12 +138,12 @@ class MyMiscSetColorLEDCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
     if(value.length() == 6) {
-      uint8_t left_r = value[3];
-      uint8_t left_g = value[4];
-      uint8_t left_b = value[5];
-      uint8_t right_r = value[0];
-      uint8_t right_g = value[1];
-      uint8_t right_b = value[2];
+      uint8_t left_r = value[0];
+      uint8_t left_g = value[1];
+      uint8_t left_b = value[2];
+      uint8_t right_r = value[3];
+      uint8_t right_g = value[4];
+      uint8_t right_b = value[5];
       
       edubot.led.leftBright(left_r, left_g, left_b);
       edubot.led.rightBright(right_r, right_g, right_b);
@@ -198,7 +198,7 @@ void setup() {
   // Set Step
   BLECharacteristic *mCharMotorSetStep = mServiceMotor->createCharacteristic(
                                          MOTOR_CHARACTERISTIC_SET_STEP_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMotorSetStep = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMotorSetStep->setValue("Motor SetStep");  
   mCharMotorSetStep->addDescriptor(mDescMotorSetStep);
@@ -207,7 +207,7 @@ void setup() {
   // Set Speed
   BLECharacteristic *mCharMotorSetSpeed = mServiceMotor->createCharacteristic(
                                          MOTOR_CHARACTERISTIC_SET_SPEED_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMotorSetSpeed = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMotorSetSpeed->setValue("Motor SetSpeed");  
   mCharMotorSetSpeed->addDescriptor(mDescMotorSetSpeed);
@@ -216,7 +216,7 @@ void setup() {
   // Set Distance
   BLECharacteristic *mCharMotorSetDistance = mServiceMotor->createCharacteristic(
                                          MOTOR_CHARACTERISTIC_SET_DISTANCE_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMotorSetDistance = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMotorSetDistance->setValue("Motor SetDistance");  
   mCharMotorSetDistance->addDescriptor(mDescMotorSetDistance);
@@ -228,7 +228,7 @@ void setup() {
   // Set Accel
   BLECharacteristic *mCharMotorSetAccel = mServiceMotor->createCharacteristic(
                                          MOTOR_CHARACTERISTIC_SET_ACCEL_UUID,
-                                         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE_NR);
   mCharMotorSetAccel->setValue((uint8_t*)value_motor_set_accel, 2);
   BLEDescriptor *mDescMotorSetAccel = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMotorSetAccel->setValue("Motor SetAccel");  
@@ -247,7 +247,7 @@ void setup() {
   // SetColorLED
   BLECharacteristic *mCharMiscSetColorLED = mServiceMisc->createCharacteristic(
                                          MISC_CHARACTERISTIC_COLOR_LED_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMiscSetColorLED = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMiscSetColorLED->setValue("NeoPixel Color RGB");  
   mCharMiscSetColorLED->addDescriptor(mDescMiscSetColorLED);
@@ -256,7 +256,7 @@ void setup() {
   // PlaySound
   BLECharacteristic *mCharMiscPlaySound = mServiceMisc->createCharacteristic(
                                          MISC_CHARACTERISTIC_PLAY_SOUND_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMiscPlaySound = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMiscPlaySound->setValue("Play Sound");  
   mCharMiscPlaySound->addDescriptor(mDescMiscPlaySound);
@@ -265,7 +265,7 @@ void setup() {
   // setTextOLED
   BLECharacteristic *mCharMiscSetTextOLED = mServiceMisc->createCharacteristic(
                                          MISC_CHARACTERISTIC_SET_TEXT_OLED_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMiscSetTextOLED = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMiscSetTextOLED->setValue("SetText OLED");  
   mCharMiscSetTextOLED->addDescriptor(mDescMiscSetTextOLED);
@@ -274,7 +274,7 @@ void setup() {
   // setImageOLED
   BLECharacteristic *mCharMiscSetImageOLED = mServiceMisc->createCharacteristic(
                                          MISC_CHARACTERISTIC_SET_IMAGE_OLED_UUID,
-                                         BLECharacteristic::PROPERTY_WRITE);
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
   BLEDescriptor *mDescMiscSetImageOLED = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
   mDescMiscSetImageOLED->setValue("SetImage OLED");  
   mCharMiscSetImageOLED->addDescriptor(mDescMiscSetImageOLED);
