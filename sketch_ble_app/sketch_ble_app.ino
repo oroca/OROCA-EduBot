@@ -134,6 +134,85 @@ class MyMotorSetAccelCallbacks: public BLECharacteristicCallbacks {
   }
 };
 
+void rgbTohsv(uint8_t r_in, uint8_t g_in, uint8_t b_in, float &h_out, float &s_out, float &v_out)
+{
+  float r = r_in / 255.0;
+  float g = g_in / 255.0;
+  float b = b_in / 255.0;
+
+  float max_val = max(max(r, g), b);
+  float min_val = min(min(r, g), b);
+
+  v_out = max_val;
+  float dist = max_val - min_val;
+  if(max_val == 0)
+    s_out = 0;
+  else 
+    s_out = dist / max_val;
+
+  if(max_val == min_val) {
+    h_out = 0;
+  }
+  else {
+    if(max_val == r) {
+      if(g < b) 
+        h_out = (g - b) / dist + 6;
+      else 
+        h_out = (g - b) / dist;
+    }
+    else if(max_val == g) {
+      h_out = (b - r) / dist + 2;
+    }
+    else {
+      h_out = (r - g) / dist + 4;
+    }
+
+    h_out = h_out / 6.0;
+  }
+}
+
+void hsvTorgb(float h_in, float s_in, float v_in, uint8_t &r_out, uint8_t &g_out, uint8_t &b_out)
+{
+  uint8_t i = floor(h_in * 6);
+  float f = h_in * 6.0 - i;
+  float p = v_in * (1.0 - s_in);
+  float q = v_in * (1.0 - f * s_in);
+  float t = v_in * (1.0 - (1.0 - f) * s_in);
+
+  switch(i % 6) {
+    case 0:
+      r_out = (uint8_t)(255.0 * v_in);
+      g_out = (uint8_t)(255.0 * t);
+      b_out = (uint8_t)(255.0 * p);
+      break;
+    case 1:
+      r_out = (uint8_t)(255 * q);
+      g_out = (uint8_t)(255 * v_in);
+      b_out = (uint8_t)(255 * p);
+      break;
+    case 2:
+      r_out = (uint8_t)(255 * p);
+      g_out = (uint8_t)(255 * v_in);
+      b_out = (uint8_t)(255 * t);
+      break;
+    case 3:
+      r_out = (uint8_t)(255 * p);
+      g_out = (uint8_t)(255 * q);
+      b_out = (uint8_t)(255 * v_in);
+      break;
+    case 4:
+      r_out = (uint8_t)(255 * t);
+      g_out = (uint8_t)(255 * p);
+      b_out = (uint8_t)(255 * v_in);
+      break;
+    case 5:
+      r_out = (uint8_t)(255 * v_in);
+      g_out = (uint8_t)(255 * p);
+      b_out = (uint8_t)(255 * q);
+      break;
+  }
+}
+
 class MyMiscSetColorLEDCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
@@ -144,6 +223,17 @@ class MyMiscSetColorLEDCallbacks: public BLECharacteristicCallbacks {
       uint8_t right_r = value[3];
       uint8_t right_g = value[4];
       uint8_t right_b = value[5];
+
+      // reduce brightness from original rgb color
+      //1. rgb to hsv
+      float h, s, v;
+      rgbTohsv(left_r, left_g, left_b, h, s, v);
+      v = v / 20.0;
+      hsvTorgb(h, s, v, left_r, left_g, left_b);
+      
+      rgbTohsv(right_r, right_g, right_b, h, s, v);
+      v = v / 20.0;
+      hsvTorgb(h, s, v, right_r, right_g, right_b);
       
       edubot.led.leftBright(left_r, left_g, left_b);
       edubot.led.rightBright(right_r, right_g, right_b);
@@ -473,15 +563,7 @@ void loop() {
       mCharSensorImuSensor->notify();
     }
 
-    status_update_sensors_count = 0;
-
-    Serial.print(value_sensor_imu_sensor[0]);
-    Serial.print("  ");
-    Serial.print(value_sensor_imu_sensor[1]);
-    Serial.print("  ");
-    Serial.print(value_sensor_imu_sensor[2]);
-    Serial.print("\n");
-    
+    status_update_sensors_count = 0;    
   }
 
   status_update_all_count++;
