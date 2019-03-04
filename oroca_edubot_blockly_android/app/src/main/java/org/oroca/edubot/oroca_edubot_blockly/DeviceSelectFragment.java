@@ -83,9 +83,11 @@ public class DeviceSelectFragment extends Fragment {
             return;
         }
 
-        BleDevice device = new BleDevice(result.getDevice().getName(), result.getDevice().getAddress());
-        mDeviceList.add(device);
-        mBleDeviceAdapter.notifyDataSetChanged();
+        if(result.getDevice().getName().toLowerCase().contains("edubot")) {
+            BleDevice device = new BleDevice(result.getDevice().getName(), result.getDevice().getAddress());
+            mDeviceList.add(device);
+            mBleDeviceAdapter.notifyDataSetChanged();
+        }
     }
 
     void onCompletedScanning() {

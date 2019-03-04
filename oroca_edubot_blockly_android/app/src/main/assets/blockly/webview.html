@@ -11,7 +11,8 @@
   <script src="acorn_interpreter.js"></script>
   <script src="javascript_compressed.js"></script>
   <!-- TODO: Select msg file based on locale. -->
-  <script src="msg/js/ko.js"></script>
+  <script src="modern.js"></script>
+  <script src="msg/js/en.js"></script>
   <script src="blocks_edubot.js"></script>
   <script src="toolbox_standard.js"></script>
 </head>
@@ -20,27 +21,27 @@
   <div id="blocklyDiv"></div>
   <script type="text/javascript">
     var workspace = Blockly.inject('blocklyDiv', {
-          media: 'media/',
-          toolbox: BLOCKLY_TOOLBOX_XML['standard'],
-          zoom: { controls: true,
-                  startScale: 1.2},
-          trashcan: true,
-        });
+        media: 'media/',
+        toolbox: BLOCKLY_TOOLBOX_XML['standard'],
+        zoom: { controls: true,
+              startScale: 1.1},
+        trashcan: true,
+        theme: Blockly.Themes.Modern,
+    });
 
     function getXmlTextFromWorkspace() {
-      var xml = Blockly.Xml.workspaceToDom(workspace);
-      var xml_text = Blockly.Xml.domToText(xml);
-
-      return xml_text;
+        var xml = Blockly.Xml.workspaceToDom(workspace);
+        var xml_text = Blockly.Xml.domToText(xml);
+        return xml_text;
     }
 
     function restoreXmlTextToWorkspace(xml_text) {
-      Blockly.mainWorkspace.clear();
+        Blockly.mainWorkspace.clear();
 
-      var xml = Blockly.Xml.textToDom(xml_text);
-      Blockly.Xml.domToWorkspace(xml, workspace);
+        var xml = Blockly.Xml.textToDom(xml_text);
+        Blockly.Xml.domToWorkspace(xml, workspace);
 
-      Blockly.mainWorkspace.zoomCenter(0);
+        Blockly.mainWorkspace.zoomCenter(0);
     }
   </script>
 </body>

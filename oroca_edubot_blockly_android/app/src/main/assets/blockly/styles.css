@@ -19,8 +19,21 @@ html, body, #blocklyDiv {
 
 @media (-webkit-device-pixel-ratio: 1.75) {
     .blocklyTreeLabel {
+        letter-spacing: -1.2px;
         font-size: 22px;
-        font-weight: 500;
+        font-weight: 300;
+    }
+
+    .blocklyTreeRow {
+        height: 44px;
+        line-height: 44px;
+        padding-right: 60px;
+        margin-bottom: 8px;
+    }
+
+    .blocklyText {
+        font-size: 12px;
+        font-weight: 400;
     }
 }
 

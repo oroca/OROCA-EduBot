@@ -11,8 +11,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
         app:srcCompat="@drawable/ic_icon_edubot" />
 
     <TextView
@@ -21,7 +22,9 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textDeviceAddress"
@@ -29,5 +32,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption" />
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textSize="14sp"
+        android:textStyle="italic" />
 </LinearLayout>

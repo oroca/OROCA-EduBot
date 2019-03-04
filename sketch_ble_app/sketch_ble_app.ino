@@ -216,7 +216,7 @@ void hsvTorgb(float h_in, float s_in, float v_in, uint8_t &r_out, uint8_t &g_out
 class MyMiscSetColorLEDCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
-    if(value.length() == 6) {
+    if(value.length() == 6) {     
       uint8_t left_r = value[0];
       uint8_t left_g = value[1];
       uint8_t left_b = value[2];
@@ -244,7 +244,7 @@ class MyMiscSetColorLEDCallbacks: public BLECharacteristicCallbacks {
 class MyMiscPlaySoundCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
-    if(value.length() == 6) {
+    if(value.length() == 1) {
       
     }
   }
@@ -263,8 +263,10 @@ class MyMiscSetImageOLEDCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
 
-    display_image_index = value[0];
-    request_display_image = 1;
+    if(value.length() == 1) {
+      display_image_index = value[0];
+      request_display_image = 1;
+    }
   }
 };
 
@@ -274,7 +276,7 @@ void setup() {
   edubot.begin(115200);
   Serial.println("===============\nStarting BLE work!");
 
-  BLEDevice::init("OROCA_EduBot");
+  BLEDevice::init("OROCA EduBot");
   BLEServer *mServer = BLEDevice::createServer();
   mServer->setCallbacks(new MyBLEServerCallbacks());
   

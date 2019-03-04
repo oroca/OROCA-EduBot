@@ -81,6 +81,7 @@ public class MainMenuFragment extends Fragment {
         buttonConnectDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((MainActivity)getActivity()).disconnectBleDevice();
                 ((MainActivity)getActivity()).changeFragmentDeviceSelection();
                 ((MainActivity)getActivity()).startBleDeviceScanning();
             }
@@ -90,6 +91,7 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("EEE", "ButtonExecute");
+                ((MainActivity)getActivity()).motorSetStep(500, 500);
             }
         });
 

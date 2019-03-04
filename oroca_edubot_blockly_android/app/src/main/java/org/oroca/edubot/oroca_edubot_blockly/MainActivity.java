@@ -172,11 +172,11 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         }
         else if(requestCode == MainMenuFragment.ON_REQUEST_SAVE_FILE && resultCode == RESULT_OK) {
             targetFileName = data.getData();
-            Log.e("EEE", targetFileName.toString());
+            //Log.e("EEE", targetFileName.toString());
             mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace();
         }
         else if(requestCode == MY_REQUEST_ENABLE_BLUETOOTH) {
-            Log.i("EEE", "Enable Bluetooth: " + Integer.toString(resultCode));
+            //Log.i("EEE", "Enable Bluetooth: " + Integer.toString(resultCode));
         }
     }
 
@@ -319,6 +319,12 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mEdubotController.connectToDevice(address);
     }
 
+    public void disconnectBleDevice() {
+        if(mIsConnectedBle) {
+            mEdubotController.disconnectFromDevice();
+        }
+    }
+
     @Override
     public void onConnected() {
         mIsConnectedBle = true;
@@ -329,5 +335,132 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     public void onDisconnected() {
         mIsConnectedBle = false;
         mMainMenuFragment.onDisconnected();
+    }
+
+    // Functions for interfacing with Javascript
+
+    @JavascriptInterface
+    public void motorSetStep(final int l_step, final int r_step) {
+        mEdubotController.motorSetStep(l_step, r_step);
+    }
+
+    @JavascriptInterface
+    public void motorSetSpeed(final int l_vel, final int r_vel) {
+        mEdubotController.motorSetSpeed(l_vel, r_vel);
+    }
+
+    @JavascriptInterface
+    public void motorSetDistance(final int l_dist, final int r_dist) {
+        mEdubotController.motorSetDistance(l_dist, r_dist);
+    }
+
+    @JavascriptInterface
+    public void motorSetAcceleration(final int l_acc, final int r_acc) {
+        mEdubotController.motorSetAccel(l_acc, r_acc);
+    }
+
+    @JavascriptInterface
+    public void motorSetMaxVelocity(final int max_vel) {
+        mEdubotController.setMotorMaxVelocity(max_vel);
+    }
+
+    @JavascriptInterface
+    public int getMotorMaxVelocity() {
+        return mEdubotController.getMotorMaxVelocity();
+    }
+
+    @JavascriptInterface
+    public void motorMoveForward() {
+        mEdubotController.motorSetSpeed(mEdubotController.getMotorMaxVelocity(),mEdubotController.getMotorMaxVelocity());
+    }
+
+    @JavascriptInterface
+    public void motorMoveBackWard() {
+        mEdubotController.motorSetSpeed(-1 * mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
+    }
+
+    @JavascriptInterface
+    public void motorTurnLeft() {
+        mEdubotController.motorSetSpeed(-1 * mEdubotController.getMotorMaxVelocity(), mEdubotController.getMotorMaxVelocity());
+    }
+
+    @JavascriptInterface
+    public void motorTurnRight() {
+        mEdubotController.motorSetSpeed(mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
+    }
+
+    @JavascriptInterface
+    public void motorStop() {
+        mEdubotController.motorSetSpeed(0, 0);
+    }
+
+    @JavascriptInterface
+    public void setColorLED(final String l_rgb, final String r_rgb) {
+        mEdubotController.miscSetColorLed(l_rgb, r_rgb);
+    }
+
+    @JavascriptInterface
+    public void setText(final String text) {
+        mEdubotController.miscSetText(text);
+    }
+
+    @JavascriptInterface
+    public void setImage(final int index) {
+        mEdubotController.miscSetImage(index);
+    }
+
+    @JavascriptInterface
+    public void playSound(final int index) {
+        mEdubotController.miscPlaySound(index);
+    }
+
+    @JavascriptInterface
+    public boolean isMoving() {
+        return mEdubotController.getDataIsMoving();
+    }
+
+    @JavascriptInterface
+    public double getBattVoltage() {
+        return mEdubotController.getDataBattVoltage();
+    }
+
+    @JavascriptInterface
+    public boolean isNeedCharging() {
+        return mEdubotController.getDataIsNeedCharging();
+    }
+
+    @JavascriptInterface
+    public int getButtonState() {
+        return mEdubotController.getDataButtonState();
+    }
+
+    @JavascriptInterface
+    public boolean isButtonPressed() {
+        return mEdubotController.getDataIsButtonPressed();
+    }
+
+    @JavascriptInterface
+    public int getFloorSensor(int index) {
+        return mEdubotController.getDataFloorSensor(index);
+    }
+
+    @JavascriptInterface
+    public int getDistanceSensor(int index) {
+        return mEdubotController.getDataDistanceSensor(index);
+    }
+
+    @JavascriptInterface
+    public double getImuSensor(int index) {
+        return mEdubotController.getDataImuSensor(index);
+    }
+
+    @JavascriptInterface
+    public double getAccSensor(int index) {
+        return mEdubotController.getDataAccSensor(index);
+    }
+
+    @JavascriptInterface
+    public double getGyroSensor(int index) {
+        return mEdubotController.getDataGyroSensor(index);
     }
 }

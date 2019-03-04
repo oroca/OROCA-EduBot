@@ -433,34 +433,3 @@ Blockly.Msg["TEXTS_HUE"] = "160";
 Blockly.Msg["PROCEDURES_HUE"] = "290";
 Blockly.Msg["COLOUR_HUE"] = "20";
 Blockly.Msg["VARIABLES_DYNAMIC_HUE"] = "310";
-
-Blockly.Msg["CATEGORY_LABEL_LOGIC"] = "로직";
-Blockly.Msg["CATEGORY_LABEL_LOOP"] = "반복";
-Blockly.Msg["CATEGORY_LABEL_MATH"] = "산술";
-Blockly.Msg["CATEGORY_LABEL_TEXT"] = "텍스트";
-Blockly.Msg["CATEGORY_LABEL_LISTS"] = "리스트";
-Blockly.Msg["CATEGORY_LABEL_COLOUR"] = "색상";
-Blockly.Msg["CATEGORY_LABEL_VARIABLES"] = "변수";
-Blockly.Msg["CATEGORY_LABEL_FUNCTIONS"] = "함수";
-
-Blockly.Msg["EDUBOT_MOVE_HUE"] = "200";
-Blockly.Msg["EDUBOT_SENSING_HUE"] = "80";
-
-Blockly.Msg["CATEGORY_LABEL_EDUBOT_MOVE"] = "움직이기";
-Blockly.Msg["CATEGORY_LABEL_EDUBOT_SENSING"] = "감지하기";
-
-Blockly.Msg["EDUBUT_MOVE_LABEL_FORWARD"] = "앞";
-Blockly.Msg["EDUBUT_MOVE_LABEL_BACKWARD"] = "뒤";
-Blockly.Msg["EDUBUT_MOVE_LABEL_CW"] = "시계방향";
-Blockly.Msg["EDUBUT_MOVE_LABEL_CCW"] = "반시계방향";
-Blockly.Msg["EDUBUT_MOVE_LABEL_LEFT"] = "왼쪽";
-Blockly.Msg["EDUBUT_MOVE_LABEL_CENTER"] = "가운데";
-Blockly.Msg["EDUBUT_MOVE_LABEL_RIGHT"] = "오른쪽";
-
-Blockly.Msg["EDUBUT_MOVE_MSG_MOVE1"] = "🚗 %2 (%) 속도로 %1 방향으로 이동"
-Blockly.Msg["EDUBUT_MOVE_MSG_MOVE2"] = "🚗 %2 (cm)까지 %1 방향으로 이동"
-Blockly.Msg["EDUBUT_MOVE_MSG_TURN1"] = "🚗 %2 (%) 속도로 %1 방향으로 회전"
-Blockly.Msg["EDUBUT_MOVE_MSG_TURN2"] = "🚗 %2 (deg)까지 %1 방향으로 회전"
-Blockly.Msg["EDUBUT_MOVE_MSG_STOP"] = "🚫 제자리에 정지"
-Blockly.Msg["EDUBUT_SENSING_MSG_DISTANCE"] = "📏 거리 (0 ~ 2.0m)";
-Blockly.Msg["EDUBUT_SENSING_MSG_FLOOR"] = "🔍 바닥감지 %1 (있음/없음)";
