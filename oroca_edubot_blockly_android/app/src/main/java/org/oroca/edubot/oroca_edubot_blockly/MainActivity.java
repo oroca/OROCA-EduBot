@@ -372,6 +372,14 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @JavascriptInterface
     public void doneExecuting() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mButton.setImageResource(R.drawable.ic_icon_setup);
+            }
+        });
+
+
         mEdubotController.motorSetVelocity(0, 0);
         mEdubotController.miscSetColorLed("#000000", "#000000");
         mEdubotController.miscSetText("_!_!_!");
