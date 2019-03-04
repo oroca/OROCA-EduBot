@@ -254,8 +254,13 @@ class MyMiscSetTextOLEDCallbacks: public BLECharacteristicCallbacks {
   void onWrite(BLECharacteristic *pCharacteristic) {
     std::string value = pCharacteristic->getValue();
 
-    display_text = value.c_str();
-    request_display_text = 1;   
+    if(value != "_!_!_!") {
+      display_text = value.c_str();
+      request_display_text = 1;
+    } 
+    else {
+      status_text_displayed = 1;
+    }
   }
 };
 

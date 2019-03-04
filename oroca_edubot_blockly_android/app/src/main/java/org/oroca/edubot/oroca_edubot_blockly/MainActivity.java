@@ -374,7 +374,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     public void doneExecuting() {
         mEdubotController.motorSetVelocity(0, 0);
         mEdubotController.miscSetColorLed("#000000", "#000000");
-        mEdubotController.miscSetText("");
+        mEdubotController.miscSetText("_!_!_!");
     }
 
     @JavascriptInterface
@@ -439,7 +439,6 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @JavascriptInterface
     public void setColorLED(final String l_rgb, final String r_rgb) {
-        Log.e("EEE", "setColorLED");
         mEdubotController.miscSetColorLed(l_rgb, r_rgb);
     }
 
@@ -490,7 +489,6 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @JavascriptInterface
     public int getFloorSensor(int index) {
-        Log.e("EEE", Integer.toString(mEdubotController.getDataFloorSensor(index)));
         return mEdubotController.getDataFloorSensor(index);
     }
 
