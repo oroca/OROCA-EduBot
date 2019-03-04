@@ -459,7 +459,7 @@ void loop() {
   status_led_count++;
   if(status_led_count > 50) {
     if(device_connected) {
-      edubot.ledOff();
+      edubot.ledOn();
 
       if(status_text_displayed) {
         edubot.lcd.setCursor(0, 32);

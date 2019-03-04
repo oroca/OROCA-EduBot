@@ -163,6 +163,22 @@ Blockly.defineBlocksWithJsonArray([
     "helpUrl": "https://github.com/oroca/OROCA-EduBot"
 },
 {
+    "type": "edubot_sleep",
+    "message0": "sleep (ms) %1",
+    "args0": [
+             {
+             "type": "input_value",
+             "name": "TIME",
+             "check": "Number"
+             }
+             ],
+    "previousStatement": null,
+    "nextStatement": null,
+    "style": "move_blocks",
+    "tooltip": "sleep for desired milliseconds",
+    "helpUrl": "https://github.com/oroca/OROCA-EduBot"
+},
+{
     "type": "edubot_misc_set_colour_led",
     "message0": "set colour left %1 and right %2",
     "args0": [

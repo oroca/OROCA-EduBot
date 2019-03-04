@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     static final long SCANNING_TIMEOUT = 10000; // 10sec
 
     private EdubotController mEdubotController;
+    private boolean mIsAllowContinueExecuting = false;
+    private boolean mModeInExecuting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +82,20 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .addToBackStack(null)
-                        .commit();
+                if(!mModeInExecuting) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                            .addToBackStack(null)
+                            .commit();
 
-                mButton.setVisibility(View.GONE);
+                    mButton.setVisibility(View.GONE);
+                }
+                else {
+                    setAllowContinueExecuting(false);
+                    mModeInExecuting = false;
+                    mButton.setImageResource(R.drawable.ic_icon_setup);
+                }
             }
         });
 
@@ -199,6 +208,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 @Override
                 public void run() {
                     getSupportFragmentManager().popBackStackImmediate();
+                    mButton.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -208,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 @Override
                 public void run() {
                     getSupportFragmentManager().popBackStackImmediate();
+                    mButton.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -337,7 +348,39 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mMainMenuFragment.onDisconnected();
     }
 
+    public void runCode() {
+        mBlocklyWebViewFragment.reqRunCode();
+        mModeInExecuting = true;
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mButton.setImageResource(R.drawable.ic_icon_stop);
+            }
+        });
+    }
+
     // Functions for interfacing with Javascript
+    public void setAllowContinueExecuting(boolean allow) {
+        mIsAllowContinueExecuting = allow;
+    }
+
+    @JavascriptInterface
+    public boolean allowContinueExecuting() {
+        return mIsAllowContinueExecuting;
+    }
+
+    @JavascriptInterface
+    public void doneExecuting() {
+        mEdubotController.motorSetVelocity(0, 0);
+        mEdubotController.miscSetColorLed("#000000", "#000000");
+        mEdubotController.miscSetText("");
+    }
+
+    @JavascriptInterface
+    public boolean isMoving() {
+        return mEdubotController.getDataIsMoving();
+    }
 
     @JavascriptInterface
     public void motorSetStep(final int l_step, final int r_step) {
@@ -345,8 +388,8 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     }
 
     @JavascriptInterface
-    public void motorSetSpeed(final int l_vel, final int r_vel) {
-        mEdubotController.motorSetSpeed(l_vel, r_vel);
+    public void motorSetVelocity(final int l_vel, final int r_vel) {
+        mEdubotController.motorSetVelocity(l_vel, r_vel);
     }
 
     @JavascriptInterface
@@ -371,32 +414,38 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @JavascriptInterface
     public void motorMoveForward() {
-        mEdubotController.motorSetSpeed(mEdubotController.getMotorMaxVelocity(),mEdubotController.getMotorMaxVelocity());
+        mEdubotController.motorSetVelocity(mEdubotController.getMotorMaxVelocity(),mEdubotController.getMotorMaxVelocity());
     }
 
     @JavascriptInterface
     public void motorMoveBackWard() {
-        mEdubotController.motorSetSpeed(-1 * mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
+        mEdubotController.motorSetVelocity(-1 * mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
     }
 
     @JavascriptInterface
     public void motorTurnLeft() {
-        mEdubotController.motorSetSpeed(-1 * mEdubotController.getMotorMaxVelocity(), mEdubotController.getMotorMaxVelocity());
+        mEdubotController.motorSetVelocity(-1 * mEdubotController.getMotorMaxVelocity(), mEdubotController.getMotorMaxVelocity());
     }
 
     @JavascriptInterface
     public void motorTurnRight() {
-        mEdubotController.motorSetSpeed(mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
+        mEdubotController.motorSetVelocity(mEdubotController.getMotorMaxVelocity(), -1 * mEdubotController.getMotorMaxVelocity());
     }
 
     @JavascriptInterface
     public void motorStop() {
-        mEdubotController.motorSetSpeed(0, 0);
+        mEdubotController.motorSetVelocity(0, 0);
     }
 
     @JavascriptInterface
     public void setColorLED(final String l_rgb, final String r_rgb) {
+        Log.e("EEE", "setColorLED");
         mEdubotController.miscSetColorLed(l_rgb, r_rgb);
+    }
+
+    @JavascriptInterface
+    public void turnOffLEDs() {
+        mEdubotController.miscSetColorLed("#000000", "#000000");
     }
 
     @JavascriptInterface
@@ -410,13 +459,13 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     }
 
     @JavascriptInterface
-    public void playSound(final int index) {
-        mEdubotController.miscPlaySound(index);
+    public void clearDisplay() {
+        mEdubotController.miscSetText("");
     }
 
     @JavascriptInterface
-    public boolean isMoving() {
-        return mEdubotController.getDataIsMoving();
+    public void playSound(final int index) {
+        mEdubotController.miscPlaySound(index);
     }
 
     @JavascriptInterface
@@ -441,6 +490,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @JavascriptInterface
     public int getFloorSensor(int index) {
+        Log.e("EEE", Integer.toString(mEdubotController.getDataFloorSensor(index)));
         return mEdubotController.getDataFloorSensor(index);
     }
 

@@ -212,10 +212,10 @@ public class EdubotController {
             mDataButtonState = data[3];
             mDataIsButtonPressed = data[3] == 1 ? true : false;
 
-            mDataFloorSensor[0] = data[4];
-            mDataFloorSensor[1] = data[5];
-            mDataFloorSensor[2] = data[6];
-            mDataFloorSensor[3] = data[7];
+            mDataFloorSensor[0] = data[4] & 0xff;
+            mDataFloorSensor[1] = data[5] & 0xff;
+            mDataFloorSensor[2] = data[6] & 0xff;
+            mDataFloorSensor[3] = data[7] & 0xff;
 
             mDataDistanceSensor[0] = (((data[9] << 8) & 0xff00) + (data[8] & 0xff));
             mDataDistanceSensor[1] = (((data[11] << 8) & 0xff00) + (data[10] & 0xff));
@@ -296,7 +296,7 @@ public class EdubotController {
         }
     }
 
-    public void motorSetSpeed(int l_vel, int r_vel) {
+    public void motorSetVelocity(int l_vel, int r_vel) {
         int left_vel = Math.max(Math.min(l_vel, 300), -300);
         int right_vel = Math.max(Math.min(r_vel, 300), -300);
 
@@ -315,18 +315,14 @@ public class EdubotController {
     }
 
     public void motorSetDistance(int l_dist, int r_dist) {
-        byte[] data = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        byte[] data = {0, 0, 0, 0, 0, 0};
 
-        data[0] = (byte)((l_dist >> 24) & 0xff);
-        data[1] = (byte)((l_dist >> 16) & 0xff);
-        data[2] = (byte)((l_dist >> 8) & 0xff);
-        data[3] = (byte)( l_dist & 0xff);
-        data[4] = (byte)((r_dist >> 24) & 0xff);
-        data[5] = (byte)((r_dist >> 16) & 0xff);
-        data[6] = (byte)((r_dist >> 8) & 0xff);
-        data[7] = (byte)( r_dist & 0xff);
-        data[8] = (byte)((mMaxVelocity >> 8) & 0xff);
-        data[9] = (byte)( mMaxVelocity & 0xff);
+        data[0] = (byte)((l_dist >> 8) & 0xff);
+        data[1] = (byte)( l_dist & 0xff);
+        data[2] = (byte)((r_dist >> 8) & 0xff);
+        data[3] = (byte)( r_dist & 0xff);
+        data[4] = (byte)((mMaxVelocity >> 8) & 0xff);
+        data[5] = (byte)( mMaxVelocity & 0xff);
 
         if(mMotorSetDistanceChar.setValue(data)) {
             while(!mBluetoothGatt.writeCharacteristic(mMotorSetDistanceChar) && mIsConnected);

@@ -145,9 +145,9 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="height" value="64" />
-                            <entry key="outputName" value="ic_icon_setup" />
+                            <entry key="outputName" value="ic_icon_stop" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../resources/Circle-icons-gear.svg" />
+                            <entry key="sourceFile" value="$PROJECT_DIR$/../../../resources/Font_Awesome_5_regular_stop-circle.svg" />
                             <entry key="width" value="64" />
                           </map>
                         </option>

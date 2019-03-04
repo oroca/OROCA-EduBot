@@ -90,8 +90,10 @@ public class MainMenuFragment extends Fragment {
         buttonExecute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("EEE", "ButtonExecute");
-                ((MainActivity)getActivity()).motorSetStep(500, 500);
+                ((MainActivity)getActivity()).setAllowContinueExecuting(true);
+                ((MainActivity)getActivity()).runCode();
+
+                ((MainActivity)getActivity()).onBackPressed();
             }
         });
 
