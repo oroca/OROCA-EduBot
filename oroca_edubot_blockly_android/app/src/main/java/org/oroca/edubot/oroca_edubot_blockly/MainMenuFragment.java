@@ -109,14 +109,24 @@ public class MainMenuFragment extends Fragment {
     }
 
     void onConnected() {
-        buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
-        buttonExecute.setEnabled(true);
-        buttonExecute.setImageResource(R.drawable.ic_icon_play);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
+                buttonExecute.setEnabled(true);
+                buttonExecute.setImageResource(R.drawable.ic_icon_play);
+            }
+        });
     }
 
     void onDisconnected() {
-        buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
-        buttonExecute.setEnabled(false);
-        buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
+                buttonExecute.setEnabled(false);
+                buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+            }
+        });
     }
 }

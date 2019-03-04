@@ -338,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @Override
     public void onConnected() {
+        Log.e("TEST", "onConnected");
         mIsConnectedBle = true;
         mMainMenuFragment.onConnected();
     }
