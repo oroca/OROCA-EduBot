@@ -3,6 +3,7 @@ package org.oroca.edubot.oroca_edubot_blockly;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,11 @@ import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Locale;
 
 
 /**
@@ -17,6 +23,7 @@ import android.webkit.WebView;
  */
 public class BlocklyWebViewFragment extends Fragment {
     View mRootView = null;
+    String mLocale;
     WebView mWebView;
 
     public BlocklyWebViewFragment() {
@@ -27,6 +34,9 @@ public class BlocklyWebViewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Locale locale = getContext().getResources().getConfiguration().locale;
+        mLocale = locale.getLanguage();
+
         // Inflate the layout for this fragment
         if(mRootView == null) {
             mRootView = inflater.inflate(R.layout.fragment_blockly_webview, container, false);
@@ -34,13 +44,23 @@ public class BlocklyWebViewFragment extends Fragment {
 
             mWebView.setWebContentsDebuggingEnabled(true);
             mWebView.setWebChromeClient(new WebChromeClient() {
-
             });
 
             WebSettings webSettings = mWebView.getSettings();
             webSettings.setJavaScriptEnabled(true);
             mWebView.addJavascriptInterface(getContext(), "Android");
-            mWebView.loadUrl("file:///android_asset/blockly/webview.html");
+
+            switch(mLocale) {
+                case "en":
+                    mWebView.loadUrl("file:///android_asset/blockly/webview.html");
+                    break;
+                case "ko":
+                    mWebView.loadUrl("file:///android_asset/blockly/webview_ko.html");
+                    break;
+                default:
+                    mWebView.loadUrl("file:///android_asset/blockly/webview.html");
+                    break;
+            }
         }
         else {
         }

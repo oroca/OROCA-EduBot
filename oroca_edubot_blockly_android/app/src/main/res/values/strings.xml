@@ -5,6 +5,11 @@
     <string name="select_project">Select Project...</string>
     <string name="load_project">Load your project successfully...</string>
     <string name="save_project">Save your project successfully...</string>
+    <string name="cant_support_ble">This device can\'t support BLE.</string>
+    <string name="external_load_permission">If you did\'t allow permission, you can\'t load the projects in external storage.</string>
+    <string name="external_save_permision">If you did\'t allow permission, you can\'t save your projects to external storage.</string>
+    <string name="ble_permission">You need to allow permission for using BLE.</string>
+    <string name="error_get_ble_adapter">Error to get bluetooth adapter.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
         // Bluetooth
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
-            Toast.makeText(this, "This device can't support BLE.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.cant_support_ble, Toast.LENGTH_LONG).show();
             finish();
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -137,17 +137,17 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "You can't load the projects in external storage.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.external_load_permission, Toast.LENGTH_LONG).show();
                 }
             }
             case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "You can't save your projects to external storage.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.external_save_permision, Toast.LENGTH_LONG).show();
                 }
             }
             case MY_PERMISSIONS_REQUEST_COARSE_LOCATION: {
                 if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "You need to allow permission for using BLE.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.ble_permission, Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -181,7 +181,6 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         }
         else if(requestCode == MainMenuFragment.ON_REQUEST_SAVE_FILE && resultCode == RESULT_OK) {
             targetFileName = data.getData();
-            //Log.e("EEE", targetFileName.toString());
             mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace();
         }
         else if(requestCode == MY_REQUEST_ENABLE_BLUETOOTH) {
@@ -250,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         try {
             mBluetoothAdapter = mBluetoothManager.getAdapter();
-        } catch(NullPointerException e) { Toast.makeText(this,"Error to get bluetooth adapter.", Toast.LENGTH_LONG).show(); }
+        } catch(NullPointerException e) { Toast.makeText(this,R.string.error_get_ble_adapter, Toast.LENGTH_LONG).show(); }
 
         if(!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -338,7 +337,6 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @Override
     public void onConnected() {
-        Log.e("TEST", "onConnected");
         mIsConnectedBle = true;
         mMainMenuFragment.onConnected();
     }

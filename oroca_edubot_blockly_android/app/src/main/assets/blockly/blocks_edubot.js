@@ -6,7 +6,7 @@ goog.require('Blockly');
 Blockly.defineBlocksWithJsonArray([
 {
     "type": "edubot_is_moving",
-    "message0": "is moving?",
+    "message0": "%{BKY_LABEL_IS_MOVING}",
     "output": "Boolean",
     "style": "move_blocks",
     "tooltip": "is moving?",
@@ -14,7 +14,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_set_max_velocity",
-    "message0": "set max. velocity to %1",
+    "message0": "%{BKY_LABEL_SET_MAX_VELOCITY}",
     "args0": [
                 {
                     "type": "input_value",
@@ -31,7 +31,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_set_accel",
-    "message0": "set acceleration to %1",
+    "message0": "%{BKY_LABEL_SET_ACCELERATION}",
     "args0": [
                 {
                     "type": "input_value",
@@ -48,7 +48,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_set_step",
-    "message0": "move by step left %1 and right %2 ",
+    "message0": "%{BKY_LABEL_MOVE_SET_STEP}",
     "args0": [
                 {
                     "type": "input_value",
@@ -70,7 +70,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_set_velocity",
-    "message0": "move by velocity left %1 and right %2 ",
+    "message0": "%{BKY_LABEL_MOVE_SET_VELOCITY}",
     "args0": [
                 {
                     "type": "input_value",
@@ -92,7 +92,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_set_distance",
-    "message0": "move by distance left %1 and right %2 ",
+    "message0": "%{BKY_LABEL_MOVE_SET_DISTANCE}",
     "args0": [
                 {
                     "type": "input_value",
@@ -114,7 +114,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_move_forward",
-    "message0": "move forward",
+    "message0": "%{BKY_LABEL_MOVE_FORWARD}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -124,7 +124,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_move_backward",
-    "message0": "move backward",
+    "message0": "%{BKY_LABEL_MOVE_BACKWARD}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -134,7 +134,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_stop",
-    "message0": "stop",
+    "message0": "%{BKY_LABEL_MOVE_STOP}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -144,7 +144,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_turn_left",
-    "message0": "turn left",
+    "message0": "%{BKY_LABEL_TURN_LEFT}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -154,7 +154,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_motor_turn_right",
-    "message0": "turn right",
+    "message0": "%{BKY_LABEL_TURN_RIGHT}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -164,7 +164,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sleep",
-    "message0": "sleep (ms) %1",
+    "message0": "%{BKY_LABEL_SLEEP}",
     "args0": [
              {
              "type": "input_value",
@@ -180,7 +180,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_set_colour_led",
-    "message0": "set colour left %1 and right %2",
+    "message0": "%{BKY_LABEL_MISC_SET_COLOR}",
     "args0": [
                 {
                     "type": "input_value",
@@ -202,7 +202,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_turn_off_leds",
-    "message0": "turn off LEDs",
+    "message0": "%{BKY_LABEL_MISC_TURN_OFF_LEDS}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -212,7 +212,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_set_text",
-    "message0": "set text %1",
+    "message0": "%{BKY_LABEL_MISC_SET_TEXT}",
     "args0": [
                 {
                     "type": "input_value",
@@ -229,7 +229,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_set_image",
-    "message0": "set image %1",
+    "message0": "%{BKY_LABEL_MISC_SET_IMAGE}",
     "args0": [
                 {
                     "type": "input_value",
@@ -246,7 +246,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_clear_display",
-    "message0": "clear display",
+    "message0": "%{BKY_LABEL_MISC_CLEAR_DISPLAY}",
     "previousStatement": null,
     "nextStatement": null,
     "inputsInline": true,
@@ -256,7 +256,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_button_state",
-    "message0": "get button state",
+    "message0": "%{BKY_LABEL_MISC_GET_BUTTON_STATE}",
     "output": "Number",
     "style": "input_blocks",
     "tooltip": "get button state",
@@ -264,7 +264,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_is_button_pressed",
-    "message0": "is button pressed?",
+    "message0": "%{BKY_LABEL_MISC_IS_BUTTON_PRESSED}",
     "output": "Boolean",
     "style": "input_blocks",
     "tooltip": "is button pressed?",
@@ -272,7 +272,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_get_batt_voltage",
-    "message0": "battery level",
+    "message0": "%{BKY_LABEL_MISC_GET_BATTERY_LEVEL}",
     "output": "Number",
     "style": "input_blocks",
     "tooltip": "get button state",
@@ -280,7 +280,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_misc_is_need_charging",
-    "message0": "need charging?",
+    "message0": "%{BKY_LABEL_MISC_NEED_CHARGING}",
     "output": "Boolean",
     "style": "input_blocks",
     "tooltip": "need charging?",
@@ -288,26 +288,26 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sensor_floor_sensor",
-    "message0": "floor sensor %1",
+    "message0": "%{BKY_LABEL_SENSOR_FLOOR_SENSOR}",
     "args0": [
          {
              "type": "field_dropdown",
              "name": "DIRECTION",
              "options": [
                      [
-                      "left_outer",
+                      "%{BKY_FIELD_LABEL_LEFT_OUTER}",
                       "LEFT_OUTER"
                       ],
                      [
-                      "left_inner",
+                      "%{BKY_FIELD_LABEL_LEFT_INNER}",
                       "LEFT_INNER"
                       ],
                      [
-                      "right_inner",
+                      "%{BKY_FIELD_LABEL_RIGHT_INNER}",
                       "RIGHT_INNER"
                       ],
                       [
-                      "right_outer",
+                      "%{BKY_FIELD_LABEL_RIGHT_OUTER}",
                       "RIGHT_OUTER"
                       ]
             ]
@@ -320,18 +320,18 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sensor_distance_sensor",
-    "message0": "distance sensor %1",
+    "message0": "%{BKY_LABEL_SENSOR_DISTANCE_SENSOR}",
     "args0": [
          {
              "type": "field_dropdown",
              "name": "DIRECTION",
              "options": [
                      [
-                      "left",
+                      "%{BKY_FIELD_LABEL_LEFT}",
                       "LEFT"
                       ],
                      [
-                      "right",
+                      "%{BKY_FIELD_LABEL_RIGHT}",
                       "RIGHT"
                       ],
             ]
@@ -344,7 +344,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sensor_imu",
-    "message0": "imu sensor %1",
+    "message0": "%{BKY_LABEL_SENSOR_IMU_SENSOR}",
     "args0": [
          {
              "type": "field_dropdown",
@@ -372,7 +372,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sensor_accel",
-    "message0": "accelerometer sensor %1",
+    "message0": "%{BKY_LABEL_SENSOR_ACCELEROMETER}",
     "args0": [
          {
              "type": "field_dropdown",
@@ -400,7 +400,7 @@ Blockly.defineBlocksWithJsonArray([
 },
 {
     "type": "edubot_sensor_gyro",
-    "message0": "gyro sensor %1",
+    "message0": "%{BKY_LABEL_SENSOR_GYRO_SENSOR}",
     "args0": [
          {
              "type": "field_dropdown",
