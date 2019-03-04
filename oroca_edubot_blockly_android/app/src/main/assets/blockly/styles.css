@@ -17,6 +17,26 @@ html, body, #blocklyDiv {
     }
 }
 
+@media (-webkit-device-pixel-ratio: 4.0) {
+    .blocklyTreeLabel {
+        letter-spacing: -1.2px;
+        font-size: 16px;
+        font-weight: 300;
+    }
+
+    .blocklyTreeRow {
+        height: 32px;
+        line-height: 32px;
+        padding-right: 40px;
+        margin-bottom: 8px;
+    }
+
+    .blocklyText {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
 @media (-webkit-device-pixel-ratio: 1.75) {
     .blocklyTreeLabel {
         letter-spacing: -1.2px;
@@ -27,6 +47,26 @@ html, body, #blocklyDiv {
     .blocklyTreeRow {
         height: 44px;
         line-height: 44px;
+        padding-right: 60px;
+        margin-bottom: 8px;
+    }
+
+    .blocklyText {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
+@media (-webkit-device-pixel-ratio: 1.125) {
+    .blocklyTreeLabel {
+        letter-spacing: -1.2px;
+        font-size: 18px;
+        font-weight: 300;
+    }
+
+    .blocklyTreeRow {
+        height: 36px;
+        line-height: 36px;
         padding-right: 60px;
         margin-bottom: 8px;
     }
