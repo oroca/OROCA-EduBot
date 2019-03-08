@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     }
 
     @JavascriptInterface
-    void onResponseData(String req_name, String data) {
+    public void onResponseData(String req_name, String data) {
         if(req_name.equals("getXmlTextFromWorkspace")) {
             try {
                 OutputStream os = getContentResolver().openOutputStream(targetFileName, "w");
