@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<!-- HTML file to host Blockly in a mobile WebView. -->
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="styles.css">
+  <script src="blockly_compressed.js"></script>
+  <script src="blocks_compressed.js"></script>
+  <script src="acorn_interpreter.js"></script>
+  <script src="javascript_compressed.js"></script>
+  <!-- TODO: Select msg file based on locale. -->
+  <script src="modern.js"></script>
+  <script src="msg/js/en.js"></script>
+  <script src="blocks_edubot.js"></script>
+  <script src="blocks_edubot_generator.js"></script>
+  <script src="toolbox_standard.js"></script>
+</head>
+
+<body>
+  <div id="blocklyDiv"></div>
+  <script type="text/javascript">
+        var latestCode = '';
+        var intervalRunID = null;
+        var myInterpreter = null;
+
+        function delay(ms) {
+            ms += new Date().getTime();
+            while (new Date() < ms) { }
+        }
+
+        var workspace = Blockly.inject('blocklyDiv', {
+            media: 'media/',
+            toolbox: BLOCKLY_TOOLBOX_XML['standard'],
+            zoom: { controls: true,
+                    startScale: 1.1},
+            trashcan: true,
+            theme: Blockly.Themes.Modern,
+        });
+
+        function resetUi() {
+            workspace.highlightBlock(null);
+        }
+
+        function getXmlTextFromWorkspace() {
+            var xml = Blockly.Xml.workspaceToDom(workspace);
+            var xml_text = Blockly.Xml.domToText(xml);
+            return xml_text;
+        }
+
+        function restoreXmlTextToWorkspace(xml_text) {
+            Blockly.mainWorkspace.clear();
+
+            var xml = Blockly.Xml.textToDom(xml_text);
+            Blockly.Xml.domToWorkspace(xml, workspace);
+
+            Blockly.mainWorkspace.zoomCenter(0);
+        }
+
+        function highlightBlock(id) {
+            workspace.highlightBlock(id);
+        }
+
+        function generateCodeOnly() {
+            resetUi();
+
+            if(Blockly.selected != null) {
+                Blockly.selected.unselect();
+            }
+
+            Blockly.JavaScript.STATEMENT_PREFIX = '';
+            code = Blockly.JavaScript.workspaceToCode(workspace);
+            return code;
+        }
+
+        function generateCodeAndLoadIntoInterpreter() {
+            resetUi();
+
+            Blockly.JavaScript.STATEMENT_PREFIX = 'highlightBlock(%1);\n';
+            Blockly.JavaScript.addReservedWords('highlightBlock');
+
+            latestCode = Blockly.JavaScript.workspaceToCode(workspace);
+        }
+
+        function initApi(interpreter, scope) {
+            var wrapper = function(id) {
+                id = id ? id.toString() : '';
+                return interpreter.createPrimitive(highlightBlock(id));
+            };
+            interpreter.setProperty(scope, 'highlightBlock', interpreter.createNativeFunction(wrapper));
+
+            var wrapper = function(text) {
+                window.alert(arguments.length ? text : '');
+                return
+            };
+            interpreter.setProperty(scope, 'alert', interpreter.createNativeFunction(wrapper));
+
+            var wrapper = function(text) {
+                return window.prompt(arguments.length ? text : '');
+            };
+            interpreter.setProperty(scope, 'prompt', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (msec) {
+                return delay(msec);
+            };
+            interpreter.setProperty(scope, 'sleep_ms', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.isMoving();
+            };
+            interpreter.setProperty(scope, 'is_moving', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (max_vel) {
+                return Android.motorSetMaxVelocity(max_vel);
+            };
+            interpreter.setProperty(scope, 'set_max_velocity', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (acc) {
+                return Android.motorSetAcceleration(acc);
+            };
+            interpreter.setProperty(scope, 'set_acceleration', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (l_step, r_step) {
+                return Android.motorSetStep(l_step, r_step);
+            };
+            interpreter.setProperty(scope, 'move_by_step', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (l_vel, r_vel) {
+                return Android.motorSetVelocity(l_vel, r_vel);
+            };
+            interpreter.setProperty(scope, 'move_by_velocity', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (l_dist, r_dist) {
+                return Android.motorSetDistance(l_dist, r_dist);
+            };
+            interpreter.setProperty(scope, 'move_by_distance', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.motorMoveForward();
+            };
+            interpreter.setProperty(scope, 'move_forward', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.motorMoveBackWard();
+            };
+            interpreter.setProperty(scope, 'move_backward', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.motorStop();
+            };
+            interpreter.setProperty(scope, 'stop', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.motorTurnLeft();
+            };
+            interpreter.setProperty(scope, 'turn_left', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.motorTurnRight();
+            };
+            interpreter.setProperty(scope, 'turn_right', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (l_rgb, r_rgb) {
+                return Android.setColorLED(l_rgb, r_rgb);
+            };
+            interpreter.setProperty(scope, 'set_color_led', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.turnOffLEDs();
+            };
+            interpreter.setProperty(scope, 'turn_off_leds', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (msg) {
+                return Android.setText(msg);
+            };
+            interpreter.setProperty(scope, 'set_text_to_lcd', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (index) {
+                return Android.setImage(index);
+            };
+            interpreter.setProperty(scope, 'set_image_to_lcd', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.clearDisplay();
+            };
+            interpreter.setProperty(scope, 'clear_display', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.getButtonState();
+            };
+            interpreter.setProperty(scope, 'get_button_state', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.isButtonPressed();
+            };
+            interpreter.setProperty(scope, 'is_button_pressed', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.getBattVoltage();
+            };
+            interpreter.setProperty(scope, 'get_battery_level', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function () {
+                return Android.isNeedCharging();
+            };
+            interpreter.setProperty(scope, 'is_need_charging', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (direction) {
+                var index = 0;
+                if(direction == "LEFT_OUTER") {
+                    index = 0;
+                }
+                else if(direction == "LEFT_INNER") {
+                    index = 1;
+                }
+                else if(direction == "RIGHT_INNER") {
+                    index = 2;
+                }
+                else {
+                    index = 3;
+                }
+                return Android.getFloorSensor(index);
+            };
+            interpreter.setProperty(scope, 'get_floor_sensor_value', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (direction) {
+                var index = 0;
+                if(direction == "LEFT") {
+                    index = 0;
+                }
+                else {
+                    index = 1;
+                }
+                return Android.getDistanceSensor(index);
+            };
+            interpreter.setProperty(scope, 'get_distance_sensor_value', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (direction) {
+                var index = 0;
+                if(direction == "ROLL") {
+                    index = 0;
+                }
+                else if(direction == "PITCH") {
+                    index = 1;
+                }
+                else {
+                    index = 2;
+                }
+                return Android.getImuSensor(index);
+            };
+            interpreter.setProperty(scope, 'get_imu_sensor_value', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (direction) {
+                var index = 0;
+                if(direction == "X") {
+                    index = 0;
+                }
+                else if(direction == "Y") {
+                    index = 1;
+                }
+                else {
+                    index = 2;
+                }
+                return Android.getAccSensor(index);
+            };
+            interpreter.setProperty(scope, 'get_accelerometer_sensor_value', interpreter.createNativeFunction(wrapper));
+
+            wrapper = function (direction) {
+                var index = 0;
+                if(direction == "X") {
+                    index = 0;
+                }
+                else if(direction == "Y") {
+                    index = 1;
+                }
+                else {
+                    index = 2;
+                }
+                return Android.getGyroSensor(index);
+            };
+            interpreter.setProperty(scope, 'get_gyro_sensor_value', interpreter.createNativeFunction(wrapper));
+        }
+
+        function runCode() {
+            resetUi();
+
+            myInterpreter = new Interpreter(latestCode, initApi);
+            intervalRunID = window.setInterval(runCallback, 0);
+        }
+
+        function runCallback() {
+            var ok = myInterpreter.step();
+            if(!Android.allowContinueExecuting() || !ok) {
+                resetUi();
+
+                window.clearInterval(intervalRunID);
+                myInterpreter = null;
+
+                Android.doneExecuting();
+            }
+        }
+  </script>
+</body>
+</html>
