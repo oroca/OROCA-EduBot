@@ -41,5 +41,9 @@
 * Startup 기초 자료활용
 
 # 저장소위치
-*[OROCA EduBot 카카오 오픈채팅방 ](https://open.kakao.com/o/gylc1v8)
-
+* [EduBot 카카오 오픈채팅방](https://open.kakao.com/o/gylc1v8)
+* [EduBot github](https://github.com/oroca/OROCA-EduBot)
+* [EduBot OROCA](https://cafe.naver.com/openrt/19566)
+* [EduBot FaceBook](https://www.facebook.com/groups/275861313089402/)
+* [EduBot OnShape](https://cad.onshape.com/documents/c89dcc005c74a4836495ba96/w/8eaa4676b77a3b525bdd4dcf/e/514c9a7b76d98790a2ec077f)
+* [EduBot Scratch 3.0 (by byeong-kyu ahn)](https://ahnbk.com/?paged=2&cat=63)
