@@ -41,9 +41,10 @@
 * Startup 기초 자료활용
 
 # 저장소위치
-* [EduBot 카카오 오픈채팅방](https://open.kakao.com/o/gylc1v8)
-* [EduBot github](https://github.com/oroca/OROCA-EduBot)
-* [EduBot OROCA](https://cafe.naver.com/openrt/19566)
-* [EduBot FaceBook](https://www.facebook.com/groups/275861313089402/)
-* [EduBot OnShape](https://cad.onshape.com/documents/c89dcc005c74a4836495ba96/w/8eaa4676b77a3b525bdd4dcf/e/514c9a7b76d98790a2ec077f)
-* [EduBot Scratch 3.0 (by byeong-kyu ahn)](https://ahnbk.com/?paged=2&cat=63)
+* [EduBot 카카오 오픈채팅방](https://open.kakao.com/o/gylc1v8) : 프로젝트를 진행하는 메인장소
+* [EduBot github](https://github.com/oroca/OROCA-EduBot)      : 프로젝트 결과물의 중요한 저장소 
+* [EduBot OROCA](https://cafe.naver.com/openrt/19566)         : 이 프로젝트는 오로카 카페의 프로젝트 중 하나임 
+* [EduBot FaceBook](https://www.facebook.com/groups/275861313089402/) : EduBot 홍보장소
+* [EduBot OnShape](https://cad.onshape.com/documents/c89dcc005c74a4836495ba96/w/8eaa4676b77a3b525bdd4dcf/e/514c9a7b76d98790a2ec077f) : EduBot 기구부를 온라인으로 오픈할 수 있는 웹브라우저기반 캐드 OnShape
+* [EduBot Scratch 3.0 (by byeong-kyu ahn)](https://ahnbk.com/?paged=2&cat=63) : 데스크탑에서 EduBot 제어의 핵심은 Scratch 3.0, 이를 개발을 돕기위한 안병규님 개인 블로그
+
