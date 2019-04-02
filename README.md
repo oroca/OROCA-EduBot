@@ -49,4 +49,4 @@
 * [EduBot Scratch 3.0 (by byeong-kyu ahn)](https://ahnbk.com/?paged=2&cat=63) : EduBot 제어를 위한 Scratch 3.0 개발 과정을 담은 안병규님 개인 블로그
 
 # 스크래치 3.0 다운로드
- *[Scratch for EduBot](https://www.dropbox.com/sh/90xtbw8q643jycl/AAB5WP3zR4um1M4Dc9fCWX4qa?dl=0)
+ * [Scratch for EduBot](https://www.dropbox.com/sh/90xtbw8q643jycl/AAB5WP3zR4um1M4Dc9fCWX4qa?dl=0)
