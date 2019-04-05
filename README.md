@@ -48,5 +48,6 @@
 * [EduBot OnShape](https://cad.onshape.com/documents/c89dcc005c74a4836495ba96/w/8eaa4676b77a3b525bdd4dcf/e/514c9a7b76d98790a2ec077f) : EduBot 기구부를 온라인으로 오픈할 수 있는 웹브라우저기반 캐드 OnShape
 * [EduBot Scratch 3.0 (by byeong-kyu ahn)](https://ahnbk.com/?paged=2&cat=63) : EduBot 제어를 위한 Scratch 3.0 개발 과정을 담은 안병규님 개인 블로그
 
-# 스크래치 3.0 다운로드
- * [Scratch for EduBot](https://www.dropbox.com/sh/90xtbw8q643jycl/AAB5WP3zR4um1M4Dc9fCWX4qa?dl=0)
+# 다운로드
+ * [Scratch 3.0 for EduBot](https://www.dropbox.com/sh/90xtbw8q643jycl/AAB5WP3zR4um1M4Dc9fCWX4qa?dl=0)
+ * [Android App for EduBot](https://play.google.com/store/apps/details?id=org.oroca.edubot.oroca_edubot_blockly)
