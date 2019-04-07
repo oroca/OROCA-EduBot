@@ -7,7 +7,7 @@
 #include <image/EduBoy.h>
 
 
-EduBot edubot;
+//EduBot edubot;
 
 #define MOTOR_SERVICE_UUID                           "e005"
 #define MOTOR_CHARACTERISTIC_SET_STEP_UUID           "34443c33-3356-11e9-b210-d663bd873d93"
