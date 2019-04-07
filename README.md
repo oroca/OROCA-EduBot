@@ -1,4 +1,4 @@
-<img src="https://github.com/oroca/OROCA-EduBot/blob/master/EduBot_Images/20190306_002950.jpg" width="600">
+<img src="https://github.com/oroca/OROCA-EduBot/blob/master/00_EduBot_Images/20190306_002950.jpg" width="600">
 
 # 특징
 * 일반교사가 일상적인 수업에서 무리 없이 활용할 수 있도록 함에 그 목적이 있음.
