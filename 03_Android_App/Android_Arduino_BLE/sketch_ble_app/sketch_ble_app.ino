@@ -13,6 +13,7 @@
 #define MOTOR_CHARACTERISTIC_SET_STEP_UUID           "34443c33-3356-11e9-b210-d663bd873d93"
 #define MOTOR_CHARACTERISTIC_SET_SPEED_UUID          "34443c34-3356-11e9-b210-d663bd873d93"
 #define MOTOR_CHARACTERISTIC_SET_DISTANCE_UUID       "34443c35-3356-11e9-b210-d663bd873d93"
+#define MOTOR_CHARACTERISTIC_SET_ROTATION_UUID       "34443c40-3356-11e9-b210-d663bd873d93"
 #define MOTOR_CHARACTERISTIC_SET_ACCEL_UUID          "34443c36-3356-11e9-b210-d663bd873d93"
 
 #define MISC_SERVICE_UUID                            "e006"
@@ -112,11 +113,20 @@ class MyMotorSetDistanceCallbacks: public BLECharacteristicCallbacks {
       int16_t r_distance  = (value[2] << 8) + value[3];
       int16_t max_vel = (value[4] << 8) + value[5];
 
+      edubot.motor.setDistanceNoWait(l_distance, r_distance, max(min((int)max_vel, 300), 0));
+      request_motor_wait_result = 1;
+    }
+  }
+};
 
-      int32_t l_step = edubot.motor.distanceToStep(l_distance);
-      int32_t r_step = edubot.motor.distanceToStep(r_distance);
+class MyMotorSetRotationCallbacks: public BLECharacteristicCallbacks {
+  void onWrite(BLECharacteristic *pCharacteristic) {
+    std::string value = pCharacteristic->getValue();
+    if(value.length() == 4) {
+      int16_t rotation  = (value[0] << 8) + value[1];
+      int16_t max_vel = (value[4] << 8) + value[5];
 
-      edubot.motor.setStepNoWait(l_step, r_step, max(min((int)max_vel, 300), 0));
+      edubot.motor.setRotationNoWait((float)rotation, max(min((int)max_vel, 300), 0));
       request_motor_wait_result = 1;
     }
   }
@@ -318,6 +328,15 @@ void setup() {
   mDescMotorSetDistance->setValue("Motor SetDistance");  
   mCharMotorSetDistance->addDescriptor(mDescMotorSetDistance);
   mCharMotorSetDistance->setCallbacks(new MyMotorSetDistanceCallbacks());
+
+  // Set Rotation
+  BLECharacteristic *mCharMotorSetRotation = mServiceMotor->createCharacteristic(
+                                         MOTOR_CHARACTERISTIC_SET_ROTATION_UUID,
+                                         BLECharacteristic::PROPERTY_WRITE_NR);
+  BLEDescriptor *mDescMotorSetRotation = new BLEDescriptor((uint16_t)0x2901); // Characteristic User Description
+  mDescMotorSetRotation->setValue("Motor SetRotation");  
+  mCharMotorSetRotation->addDescriptor(mDescMotorSetRotation);
+  mCharMotorSetRotation->setCallbacks(new MyMotorSetRotationCallbacks());
 
   value_motor_set_accel[0] = 1;
   value_motor_set_accel[1] = 1;

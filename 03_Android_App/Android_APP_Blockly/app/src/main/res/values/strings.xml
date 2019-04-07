@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OROCA EduBot Blockly</string>
+    <string name="app_name">Blockly for OROCA EduBot</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="select_project">Select Project...</string>
