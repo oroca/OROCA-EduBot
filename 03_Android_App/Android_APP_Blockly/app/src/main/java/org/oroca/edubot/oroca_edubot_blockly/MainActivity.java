@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     DeviceSelectFragment mDeviceSelectFragment;
     MainMenuFragment mMainMenuFragment;
     ViewCodeFragment mViewCodeFragment;
+    JoystickFragment mJoystickFragment;
     ImageButton mButton;
 
     private Uri targetFileName = null;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mDeviceSelectFragment = new DeviceSelectFragment();
         mViewCodeFragment = new ViewCodeFragment(this);
         mEdubotController = new EdubotController(this);
+        mJoystickFragment = new JoystickFragment();
 
         mEdubotController.setOnEdubotControllerListener(this);
 
@@ -241,6 +243,14 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 .commit();
     }
 
+    public void changeFragmentJoystick() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, mJoystickFragment, "joystickControl")
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void startBleDeviceScanning() {
         if(mIsScanning) {
             this.stopBleDeviceScanning();
@@ -299,6 +309,9 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
         if(getSupportFragmentManager().getBackStackEntryCount() == 0) {
             mButton.setVisibility(View.VISIBLE);
+        }
+        else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            mJoystickFragment.stopTimer();
         }
     }
 

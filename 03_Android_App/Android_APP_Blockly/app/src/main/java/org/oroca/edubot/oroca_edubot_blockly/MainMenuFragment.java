@@ -24,6 +24,7 @@ public class MainMenuFragment extends Fragment {
     ImageButton buttonConnectDevice;
     ImageButton buttonExecute;
     ImageButton buttonViewCode;
+    ImageButton buttonJoystick;
 
     public static int ON_REQUEST_OPEN_FILE = 11;
     public static int ON_REQUEST_SAVE_FILE = 12;
@@ -67,15 +68,20 @@ public class MainMenuFragment extends Fragment {
 
         buttonConnectDevice = (ImageButton) v.findViewById(R.id.buttonConnectDevice);
         buttonExecute = (ImageButton) v.findViewById(R.id.buttonExecute);
+        buttonJoystick = (ImageButton) v.findViewById(R.id.buttonJoystick);
         if(((MainActivity)getActivity()).isConnectedBleDevice()) {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
             buttonExecute.setEnabled(true);
             buttonExecute.setImageResource(R.drawable.ic_icon_play);
+            buttonJoystick.setEnabled(true);
+            buttonJoystick.setImageResource(R.drawable.ic_circle_joystick);
         }
         else {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
             buttonExecute.setEnabled(false);
             buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+            buttonJoystick.setEnabled(false);
+            buttonJoystick.setImageResource(R.drawable.ic_circle_joystick_disabled);
         }
 
         buttonConnectDevice.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +111,13 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        buttonJoystick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).changeFragmentJoystick();
+            }
+        });
+
         return v;
     }
 
@@ -115,6 +128,8 @@ public class MainMenuFragment extends Fragment {
                 buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
                 buttonExecute.setEnabled(true);
                 buttonExecute.setImageResource(R.drawable.ic_icon_play);
+                buttonJoystick.setEnabled(true);
+                buttonJoystick.setImageResource(R.drawable.ic_circle_joystick);
             }
         });
     }
@@ -126,6 +141,8 @@ public class MainMenuFragment extends Fragment {
                 buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
                 buttonExecute.setEnabled(false);
                 buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+                buttonJoystick.setEnabled(false);
+                buttonJoystick.setImageResource(R.drawable.ic_circle_joystick_disabled);
             }
         });
     }

@@ -22,8 +22,8 @@
 
         <ImageButton
             android:id="@+id/buttonLoadProject"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -32,8 +32,8 @@
 
         <ImageButton
             android:id="@+id/buttonSaveProject"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -42,8 +42,8 @@
 
         <ImageButton
             android:id="@+id/buttonConnectDevice"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -51,9 +51,19 @@
             android:src="@drawable/ic_icon_disconnected" />
 
         <ImageButton
+            android:id="@+id/buttonJoystick"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_circle_joystick" />
+
+        <ImageButton
             android:id="@+id/buttonExecute"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
@@ -62,12 +72,13 @@
 
         <ImageButton
             android:id="@+id/buttonViewCode"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:scaleType="fitStart"
             android:src="@drawable/ic_icon_document" />
+
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
