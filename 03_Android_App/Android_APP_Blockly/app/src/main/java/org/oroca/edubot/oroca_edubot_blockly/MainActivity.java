@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     ViewCodeFragment mViewCodeFragment;
     JoystickFragment mJoystickFragment;
     ImageButton mButton;
+    ImageButton mButtonExecute;
 
     private Uri targetFileName = null;
 
@@ -84,19 +85,32 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!mModeInExecuting) {
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
-                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                            .addToBackStack(null)
-                            .commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .addToBackStack(null)
+                        .commit();
 
-                    mButton.setVisibility(View.GONE);
+                mButton.setVisibility(View.GONE);
+                mButtonExecute.setVisibility(View.GONE);
+            }
+        });
+
+        mButtonExecute = (ImageButton) findViewById(R.id.buttonExecute);
+        mButtonExecute.setEnabled(false);
+        mButtonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+
+        mButtonExecute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!mModeInExecuting) {
+                    setAllowContinueExecuting(true);
+                    runCode();
                 }
                 else {
                     setAllowContinueExecuting(false);
                     mModeInExecuting = false;
-                    mButton.setImageResource(R.drawable.ic_icon_setup);
+                    mButtonExecute.setImageResource(R.drawable.ic_icon_play);
                 }
             }
         });
@@ -210,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 public void run() {
                     getSupportFragmentManager().popBackStackImmediate();
                     mButton.setVisibility(View.VISIBLE);
+                    mButtonExecute.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -220,6 +235,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 public void run() {
                     getSupportFragmentManager().popBackStackImmediate();
                     mButton.setVisibility(View.VISIBLE);
+                    mButtonExecute.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -309,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
         if(getSupportFragmentManager().getBackStackEntryCount() == 0) {
             mButton.setVisibility(View.VISIBLE);
+            mButtonExecute.setVisibility(View.VISIBLE);
         }
         else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
             mJoystickFragment.stopTimer();
@@ -352,12 +369,28 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     public void onConnected() {
         mIsConnectedBle = true;
         mMainMenuFragment.onConnected();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mButtonExecute.setEnabled(true);
+                mButtonExecute.setImageResource(R.drawable.ic_icon_play);
+            }
+        });
     }
 
     @Override
     public void onDisconnected() {
         mIsConnectedBle = false;
         mMainMenuFragment.onDisconnected();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mButtonExecute.setEnabled(false);
+                mButtonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
+            }
+        });
     }
 
     public void runCode() {
@@ -367,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mButton.setImageResource(R.drawable.ic_icon_stop);
+                mButtonExecute.setImageResource(R.drawable.ic_icon_stop);
             }
         });
     }
@@ -387,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mButton.setImageResource(R.drawable.ic_icon_setup);
+                mButtonExecute.setImageResource(R.drawable.ic_icon_play);
             }
         });
 

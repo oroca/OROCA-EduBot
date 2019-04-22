@@ -22,7 +22,6 @@ public class MainMenuFragment extends Fragment {
     ImageButton buttonLoadProject;
     ImageButton buttonSaveProject;
     ImageButton buttonConnectDevice;
-    ImageButton buttonExecute;
     ImageButton buttonViewCode;
     ImageButton buttonJoystick;
 
@@ -67,19 +66,15 @@ public class MainMenuFragment extends Fragment {
         });
 
         buttonConnectDevice = (ImageButton) v.findViewById(R.id.buttonConnectDevice);
-        buttonExecute = (ImageButton) v.findViewById(R.id.buttonExecute);
+
         buttonJoystick = (ImageButton) v.findViewById(R.id.buttonJoystick);
         if(((MainActivity)getActivity()).isConnectedBleDevice()) {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
-            buttonExecute.setEnabled(true);
-            buttonExecute.setImageResource(R.drawable.ic_icon_play);
             buttonJoystick.setEnabled(true);
             buttonJoystick.setImageResource(R.drawable.ic_circle_joystick);
         }
         else {
             buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
-            buttonExecute.setEnabled(false);
-            buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
             buttonJoystick.setEnabled(false);
             buttonJoystick.setImageResource(R.drawable.ic_circle_joystick_disabled);
         }
@@ -90,16 +85,6 @@ public class MainMenuFragment extends Fragment {
                 ((MainActivity)getActivity()).disconnectBleDevice();
                 ((MainActivity)getActivity()).changeFragmentDeviceSelection();
                 ((MainActivity)getActivity()).startBleDeviceScanning();
-            }
-        });
-
-        buttonExecute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity)getActivity()).setAllowContinueExecuting(true);
-                ((MainActivity)getActivity()).runCode();
-
-                ((MainActivity)getActivity()).onBackPressed();
             }
         });
 
@@ -126,8 +111,6 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void run() {
                 buttonConnectDevice.setImageResource(R.drawable.ic_icon_connected);
-                buttonExecute.setEnabled(true);
-                buttonExecute.setImageResource(R.drawable.ic_icon_play);
                 buttonJoystick.setEnabled(true);
                 buttonJoystick.setImageResource(R.drawable.ic_circle_joystick);
             }
@@ -139,8 +122,6 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void run() {
                 buttonConnectDevice.setImageResource(R.drawable.ic_icon_disconnected);
-                buttonExecute.setEnabled(false);
-                buttonExecute.setImageResource(R.drawable.ic_icon_play_disabled);
                 buttonJoystick.setEnabled(false);
                 buttonJoystick.setImageResource(R.drawable.ic_circle_joystick_disabled);
             }
