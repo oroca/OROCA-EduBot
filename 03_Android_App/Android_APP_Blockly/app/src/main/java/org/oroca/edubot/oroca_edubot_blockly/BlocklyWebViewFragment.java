@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ public class BlocklyWebViewFragment extends Fragment {
     View mRootView = null;
     String mLocale;
     WebView mWebView;
+    boolean mIsFirstLoading = true;
 
     public BlocklyWebViewFragment() {
         // Required empty public constructor
@@ -44,6 +46,22 @@ public class BlocklyWebViewFragment extends Fragment {
 
             mWebView.setWebContentsDebuggingEnabled(true);
             mWebView.setWebChromeClient(new WebChromeClient() {
+            });
+
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    super.onPageFinished(view, url);
+
+                    if(mIsFirstLoading) {
+                        TypedValue value = new TypedValue();
+                        getResources().getValue(R.dimen.workspace_scale, value, true);
+
+                        String script = "javascript:workspace.setScale(" + Float.toString(value.getFloat()) + ");";
+                        mWebView.loadUrl(script);
+                        mIsFirstLoading = false;
+                    }
+                }
             });
 
             WebSettings webSettings = mWebView.getSettings();

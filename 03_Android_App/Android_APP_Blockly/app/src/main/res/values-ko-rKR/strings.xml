@@ -9,4 +9,9 @@
     <string name="external_save_permision">권한을 승인하지 않으면, 외장메모리에 프로젝트를 저장할 수 없습니다.</string>
     <string name="ble_permission">BLE를 사용하도록 허용해야 합니다.</string>
     <string name="error_get_ble_adapter">블루투스 어댑터를 가져오지 못했습니다.</string>
+    <string name="menu_load">불러오기</string>
+    <string name="menu_save">저장하기</string>
+    <string name="menu_connect">연결하기</string>
+    <string name="menu_manual">수동제어</string>
+    <string name="menu_code">코드보기</string>
 </resources>

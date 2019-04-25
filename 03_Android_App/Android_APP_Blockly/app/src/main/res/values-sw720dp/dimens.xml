@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Galaxy Tab S3 -->
+    <dimen name="main_icon_size">60dp</dimen>
+    <item name="workspace_scale" format="float" type="dimen">1.1</item>
+    <dimen name="main_menu_icon_size">96dp</dimen>
+    <dimen name="main_menu_text_size">16sp</dimen>
+    <dimen name="main_menu_layout_width">120dp</dimen>
+    <dimen name="device_select_margin">48dp</dimen>
+    <dimen name="device_select_view_height">240dp</dimen>
+    <dimen name="item_device_img_size">128dp</dimen>
+    <dimen name="item_device_name_size">16sp</dimen>
+    <dimen name="item_device_address_size">14sp</dimen>
+</resources>

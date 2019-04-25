@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_icon_size">32dp</dimen>
+    <item name="workspace_scale" format="float" type="dimen">0.7</item>
+    <dimen name="main_menu_icon_size">64dp</dimen>
+    <dimen name="main_menu_text_size">12sp</dimen>
+    <dimen name="main_menu_layout_width">84dp</dimen>
+    <dimen name="device_select_margin">24dp</dimen>
+    <dimen name="device_select_view_height">160dp</dimen>
+    <dimen name="item_device_img_size">64dp</dimen>
+    <dimen name="item_device_name_size">10sp</dimen>
+    <dimen name="item_device_address_size">10sp</dimen>
+</resources>

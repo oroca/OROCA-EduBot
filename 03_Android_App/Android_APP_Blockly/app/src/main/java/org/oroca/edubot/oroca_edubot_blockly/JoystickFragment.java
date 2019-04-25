@@ -28,6 +28,8 @@ public class JoystickFragment extends Fragment {
     Timer mTimer;
     double currentX = 0;
     double currentY = 0;
+    double viewWidth = 0;
+    double viewHeight = 0;
     Boolean isTouched = false;
 
     ImageButton mButtonX;
@@ -52,13 +54,18 @@ public class JoystickFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 double width = mJoystickView.getWidth();
                 double height = mJoystickView.getHeight();
+                viewWidth = width;
+                viewHeight = height;
                 switch (event.getAction() & MotionEvent.ACTION_MASK) {
                     case MotionEvent.ACTION_DOWN:
                         isTouched = true;
 
                     case MotionEvent.ACTION_MOVE:
-                        currentX = (event.getX() - width / 2.0);
-                        currentY = (height / 2.0 - event.getY());
+                        currentX = (event.getX() - width / 2.0) / (width / 2.0);
+                        currentY = (height / 2.0 - event.getY()) / (height / 2.0);
+
+                        currentX = min(max(-1.0, currentX), 1.0);
+                        currentY = min(max(-1.0, currentY), 1.0);
                         break;
 
                     case MotionEvent.ACTION_UP:
@@ -72,8 +79,8 @@ public class JoystickFragment extends Fragment {
             @Override
             public void run() {
                 if(isTouched) {
-                    double x = currentX / 78.0 * 300.0;
-                    double y = currentY / 78.0 * 300.0;
+                    double x = currentX * 300.0;
+                    double y = currentY * 300.0;
 
                     int v1 = (int)(y + x);
                     int v2 = (int)(y - x);
@@ -85,7 +92,7 @@ public class JoystickFragment extends Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mJoystickView.setCenterPoint((int)currentX, (int)currentY);
+                            mJoystickView.setCenterPoint((int)(currentX * viewWidth / 2.0), (int)(currentY * viewHeight / 2.0));
                         }
                     });
                 }

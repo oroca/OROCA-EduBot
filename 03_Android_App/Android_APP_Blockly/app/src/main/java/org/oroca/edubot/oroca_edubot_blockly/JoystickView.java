@@ -39,19 +39,19 @@ public class JoystickView extends View {
         int x = this.getWidth()/2 + pointX;
         int y = this.getHeight()/2 - pointY;
 
-        drawPaint.setStrokeWidth(5);
+        drawPaint.setStrokeWidth(10);
         drawPaint.setStyle(Paint.Style.STROKE);
-        drawPaint.setColor(Color.rgb(50, 200, 50));
-        canvas.drawCircle(x, y, 40, drawPaint);
+        drawPaint.setColor(Color.LTGRAY);
+        canvas.drawCircle(x, y, 80, drawPaint);
 
         drawPaint.setStyle(Paint.Style.FILL);
-        drawPaint.setColor(Color.rgb(0, 150, 50));
-        canvas.drawCircle(x, y, 36, drawPaint);
+        drawPaint.setColor(Color.DKGRAY);
+        canvas.drawCircle(x, y, 76, drawPaint);
     }
 
     public void setCenterPoint(int x, int y) {
-        pointX = max(min(this.getWidth()/2 - 42, x), -1 * this.getWidth()/2 + 42);
-        pointY = max(min(this.getHeight()/2 - 42, y), -1 * this.getHeight()/2 + 42);
+        pointX = max(min(this.getWidth()/2 -82, x), -1 * this.getWidth()/2 + 82);
+        pointY = max(min(this.getHeight()/2 - 82, y), -1 * this.getHeight()/2 + 82);
         postInvalidate();
     }
 }

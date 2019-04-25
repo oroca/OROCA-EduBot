@@ -10,26 +10,27 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewDevices"
         android:layout_width="0dp"
-        android:layout_height="240dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:background="#BBDEFB"
+        android:layout_height="@dimen/device_select_view_height"
+        android:layout_marginStart="@dimen/device_select_margin"
+        android:layout_marginEnd="@dimen/device_select_margin"
+        android:background="#DDECF8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <ImageButton
         android:id="@+id/buttonReloadDevice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="@dimen/main_icon_size"
+        android:layout_height="@dimen/main_icon_size"
+        android:layout_marginBottom="30dp"
         android:background="@android:drawable/screen_background_light_transparent"
+        android:scaleType="fitStart"
         android:src="@drawable/ic_icon_reload"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewDevices" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

@@ -19,8 +19,8 @@
 
     <ImageButton
         android:id="@+id/buttonOpenMenu"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/main_icon_size"
+        android:layout_height="@dimen/main_icon_size"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
@@ -31,8 +31,8 @@
 
     <ImageButton
         android:id="@+id/buttonExecute"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="@dimen/main_icon_size"
+        android:layout_height="@dimen/main_icon_size"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@android:color/transparent"
@@ -40,4 +40,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonOpenMenu"
         app:srcCompat="@drawable/ic_icon_play" />
+
 </android.support.constraint.ConstraintLayout>

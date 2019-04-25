@@ -17,18 +17,19 @@ html, body, #blocklyDiv {
     }
 }
 
+/* 갤럭시 노트4, LG G4 */
 @media (-webkit-device-pixel-ratio: 4.0) {
     .blocklyTreeLabel {
-        letter-spacing: -1.2px;
-        font-size: 16px;
-        font-weight: 300;
+        letter-spacing: -0.6px;
+        font-size: 12px;
+        font-weight: 400;
     }
 
     .blocklyTreeRow {
-        height: 32px;
-        line-height: 32px;
+        height: 20px;
+        line-height: 20px;
         padding-right: 40px;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
 
     .blocklyText {
@@ -37,17 +38,39 @@ html, body, #blocklyDiv {
     }
 }
 
-@media (-webkit-device-pixel-ratio: 1.75) {
+/* HOMTOM  HT16*/
+@media (-webkit-device-pixel-ratio: 2.0) {
     .blocklyTreeLabel {
         letter-spacing: -1.2px;
-        font-size: 22px;
-        font-weight: 300;
+        font-size: 12px;
+        font-weight: 400;
     }
 
     .blocklyTreeRow {
-        height: 44px;
-        line-height: 44px;
-        padding-right: 60px;
+        height: 20px;
+        line-height: 20px;
+        padding-right: 40px;
+        margin-bottom: 6px;
+    }
+
+    .blocklyText {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
+/* Galaxy Tab S3 */
+@media (-webkit-device-pixel-ratio: 1.75) {
+    .blocklyTreeLabel {
+        letter-spacing: -1.2px;
+        font-size: 18px;
+        font-weight: 400;
+    }
+
+    .blocklyTreeRow {
+        height: 40px;
+        line-height: 40px;
+        padding-right: 40px;
         margin-bottom: 8px;
     }
 

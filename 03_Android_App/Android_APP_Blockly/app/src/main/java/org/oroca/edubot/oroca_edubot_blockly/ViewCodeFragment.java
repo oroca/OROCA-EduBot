@@ -45,7 +45,7 @@ public class ViewCodeFragment extends Fragment {
         mCodeView.setOptions(Options.Default.get(mContext)
                 .withFont(Font.DroidSansMonoSlashed)
                 .withLanguage("javascript")
-                .withFormat(new Format(1, 24, 3, 18))
+                .withFormat(new Format(1, 18, 3, 14))
                 .withCode(code)
                 .withTheme(ColorTheme.DEFAULT));
     }
