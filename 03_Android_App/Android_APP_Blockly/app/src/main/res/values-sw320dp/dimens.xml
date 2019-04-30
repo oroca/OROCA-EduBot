@@ -2,7 +2,7 @@
 <resources>
     <!-- 갤럭시 노트4, LG G4 -->
     <dimen name="main_icon_size">32dp</dimen>
-    <item name="workspace_scale" format="float" type="dimen">0.7</item>
+    <item name="workspace_scale" format="float" type="dimen">0.8</item>
     <dimen name="main_menu_icon_size">64dp</dimen>
     <dimen name="main_menu_text_size">12sp</dimen>
     <dimen name="main_menu_layout_width">84dp</dimen>

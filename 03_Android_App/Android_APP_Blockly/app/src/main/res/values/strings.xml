@@ -18,6 +18,9 @@
     <string name="menu_connect">Connect</string>
     <string name="menu_manual">Manual Control</string>
     <string name="menu_code">View Code</string>
+    <string name="confirm_exit">Exit?</string>
+    <string name="confirm_yes">Yes</string>
+    <string name="confirm_no">No</string>
 
     <!-- TODO: Remove or change this placeholder text -->
 </resources>

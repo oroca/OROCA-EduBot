@@ -17,11 +17,32 @@ html, body, #blocklyDiv {
     }
 }
 
+/* 갤럭시 노트9 */
+@media (-webkit-device-pixel-ratio: 3.0) {
+    .blocklyTreeLabel {
+        letter-spacing: -0.6px;
+        font-size: 12px;
+        font-weight: 400;
+    }
+
+    .blocklyTreeRow {
+        height: 20px;
+        line-height: 20px;
+        padding-right: 40px;
+        margin-bottom: 6px;
+    }
+
+    .blocklyText {
+        font-size: 12px;
+        font-weight: 400;
+    }
+}
+
 /* 갤럭시 노트4, LG G4 */
 @media (-webkit-device-pixel-ratio: 4.0) {
     .blocklyTreeLabel {
         letter-spacing: -0.6px;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 400;
     }
 

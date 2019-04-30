@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_circle_button_a" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/circle_button_a.svg" />
+                            <entry key="outputName" value="ic_edubot_logo" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/edubot_logo.svg" />
                           </map>
                         </option>
                       </PersistentState>

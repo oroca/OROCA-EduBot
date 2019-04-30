@@ -8,6 +8,7 @@ import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     private static final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1012;
     private static final int MY_PERMISSIONS_REQUEST_COARSE_LOCATION = 1013;
     private static final int MY_REQUEST_ENABLE_BLUETOOTH = 1014;
+    private static final int MY_PERMISSIONS_REQUEST_MULTI = 1015;
 
 
     BlocklyWebViewFragment mBlocklyWebViewFragment;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
     JoystickFragment mJoystickFragment;
     ImageButton mButton;
     ImageButton mButtonExecute;
+    boolean mIsHomeScreen = true;
 
     private Uri targetFileName = null;
 
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mIsHomeScreen = false;
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frameLayout, mMainMenuFragment, "mainMenuFragment")
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -122,17 +128,15 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     public void appCheckPermission() {
         // Read & Write in External Storage
+        ArrayList<String> listPermissions = new ArrayList<String>();
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+            listPermissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
+            listPermissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
 
         // Bluetooth
@@ -142,28 +146,29 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         }
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_COARSE_LOCATION);
+            listPermissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
         }
+
+        if(listPermissions.size() > 0) {
+            String[] strPermissions = new String[listPermissions.size()];
+            strPermissions = listPermissions.toArray(strPermissions);
+            ActivityCompat.requestPermissions(this, strPermissions, MY_PERMISSIONS_REQUEST_MULTI);
+        }
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, R.string.external_load_permission, Toast.LENGTH_LONG).show();
-                }
-            }
-            case MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE: {
-                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, R.string.external_save_permision, Toast.LENGTH_LONG).show();
-                }
-            }
-            case MY_PERMISSIONS_REQUEST_COARSE_LOCATION: {
-                if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, R.string.ble_permission, Toast.LENGTH_LONG).show();
+            case MY_PERMISSIONS_REQUEST_MULTI: {
+                if (grantResults.length > 0) {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, R.string.external_load_permission, Toast.LENGTH_LONG).show();
+                    }
+
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, R.string.ble_permission, Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
@@ -321,13 +326,39 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+//        super.onBackPressed();
+        if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+            super.onBackPressed();
+        }
 
-        if(getSupportFragmentManager().getBackStackEntryCount() == 0) {
+        if(getSupportFragmentManager().getBackStackEntryCount() == 0 && !mIsHomeScreen) {
             mButton.setVisibility(View.VISIBLE);
             mButtonExecute.setVisibility(View.VISIBLE);
+            mIsHomeScreen = true;
         }
-        else if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
+        else if(getSupportFragmentManager().getBackStackEntryCount() == 0 && mIsHomeScreen) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+            alertDialogBuilder.setMessage(R.string.confirm_exit);
+            alertDialogBuilder.setPositiveButton(R.string.confirm_yes,
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            finish();
+                        }
+                    });
+
+            alertDialogBuilder.setNegativeButton(R.string.confirm_no, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    return;
+                }
+            });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
+
+        if(getSupportFragmentManager().getBackStackEntryCount() == 1) {
             mJoystickFragment.stopTimer();
         }
     }

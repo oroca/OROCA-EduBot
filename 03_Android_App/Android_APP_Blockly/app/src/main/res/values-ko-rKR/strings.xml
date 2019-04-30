@@ -14,4 +14,7 @@
     <string name="menu_connect">연결하기</string>
     <string name="menu_manual">수동제어</string>
     <string name="menu_code">코드보기</string>
+    <string name="confirm_exit">종료하시겠습니까?</string>
+    <string name="confirm_no">아니오</string>
+    <string name="confirm_yes">네</string>
 </resources>
