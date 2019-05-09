@@ -83,8 +83,9 @@ public class MainMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).disconnectBleDevice();
-                ((MainActivity)getActivity()).changeFragmentDeviceSelection();
-                ((MainActivity)getActivity()).startBleDeviceScanning();
+                if(((MainActivity)getActivity()).startBleDeviceScanning() == true) {
+                    ((MainActivity)getActivity()).changeFragmentDeviceSelection();
+                }
             }
         });
 

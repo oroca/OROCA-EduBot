@@ -43,7 +43,7 @@ html, body, #blocklyDiv {
     .blocklyTreeLabel {
         letter-spacing: -0.6px;
         font-size: 13px;
-        font-weight: 400;
+        font-weight: 500;
     }
 
     .blocklyTreeRow {

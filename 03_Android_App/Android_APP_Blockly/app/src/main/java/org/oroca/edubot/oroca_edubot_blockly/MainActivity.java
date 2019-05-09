@@ -204,7 +204,9 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
             targetFileName = data.getData();
             mBlocklyWebViewFragment.reqGetXMLTextFromWorkspace();
         }
-        else if(requestCode == MY_REQUEST_ENABLE_BLUETOOTH) {
+        else if(requestCode == MY_REQUEST_ENABLE_BLUETOOTH && mBluetoothAdapter.isEnabled()) {
+            changeFragmentDeviceSelection();
+            startBleDeviceScanning();
             //Log.i("EEE", "Enable Bluetooth: " + Integer.toString(resultCode));
         }
     }
@@ -272,7 +274,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
                 .commit();
     }
 
-    public void startBleDeviceScanning() {
+    public boolean startBleDeviceScanning() {
         if(mIsScanning) {
             this.stopBleDeviceScanning();
         }
@@ -285,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
         if(!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, MY_REQUEST_ENABLE_BLUETOOTH);
+            return false;
         }
 
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
@@ -301,6 +304,8 @@ public class MainActivity extends AppCompatActivity implements EdubotController.
 
         mIsScanning = true;
         mBluetoothLeScanner.startScan(scanCallback);
+
+        return true;
     }
 
     private final ScanCallback scanCallback = new ScanCallback() {
