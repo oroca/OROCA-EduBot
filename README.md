@@ -23,6 +23,6 @@ Click image to link to YouTube video.
   D Key  = 오른쪽 회전  
   
 * Etc  
-  그외에 영상의 Lake, 도시 배경이 들어간 게임 배경 모델은 unity asset에서 무료로 받아  
-  깃에 올린 edubot model과 연결하였습니다.   
-  실행 파일이 너무커서 Git에는 올리수가 없습니다.    
+  그외에 3D 영상배경이 들어간 게임 배경 모델은 unity asset에서 무료 모델 사용 하였습니다.   
+  해당배경이 적용된 Scences의 경우 파일이 너무 커서 Git에는 올리수 가 없습니다. 
+  그외에 거리센서, 바닦센서는 적용 되지 않았습니다. 
