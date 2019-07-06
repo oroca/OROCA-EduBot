@@ -18,8 +18,8 @@ Click image to link to YouTube video.
   구르는 볼이 특정 위치로 구르게 하는 ml agent 기본 예제 code. 아래 링크기반으로 만듬.     
   https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Create-New.md    
 * 3. Assets\ML-Agents\Examples\Edubot     
-  1,2 프로잭트를 합쳐 Edubot이 ML agent로 학습 할수 있는 모델 제작. 현제 학습 실패. 튜닝 필요    
-  실행시 명령어( config.yaml 파일을 ml-agent 폴더로 이동 )     
+  1,2 프로잭트를 합쳐 Edubot이 ML agent로 특정 위치로 가게 학습 할수 있는 모델 제작. 현제 학습 실패. 튜닝 필요    
+  학습시 실행시 필요 명령어      
   mlagents-learn config/config.yaml --run-id=edubot_1 --train    
 
 # EdubotModelOnly에 두종류의 Edubot 모델 제작 
@@ -38,6 +38,6 @@ Click image to link to YouTube video.
   D Key  = 오른쪽 회전  
   
 * Etc  
-  그외에 3D 영상 배경은 unity asset에서 무료 모델 사용 하였습니다.   
+  그외에 유투브 영상에서 보이는 3D 영상 배경은 unity asset에서 무료 모델 사용 하였습니다.   
   해당배경이 적용된 Scenes의 경우 파일이 너무 커서 Git에는 올리 수 없습니다.   
   그외에 거리센서, 바닦센서는 적용 되지 않았습니다.   
