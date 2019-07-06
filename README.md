@@ -7,6 +7,10 @@
 Click image to link to YouTube video.  
 [![Video Label](http://img.youtube.com/vi/IynnlFMelIc/0.jpg)](https://youtu.be/IynnlFMelIc?t=0s)  
 
+# 사용법    
+  ml-agent 기본 깃다운 받아 해당깃 항목 추가       
+  https://github.com/Unity-Technologies/ml-agents    
+
 # 3개의 프로잭트를 추가 했음   
 * 1. Assets\ML-Agents\Examples\EdubotModelOnly   
   키보드로 조작이 가능한 Unity Edubot Simulation Model 파일 ( ml_agent 와 연동 없음)   
